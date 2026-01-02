@@ -108,6 +108,8 @@ export const sign_up = async (req, res) => {
     } catch (error) {
         await connection.rollback();
 
+        console.log(error);
+
         if (error && error.code === "ER_DUP_ENTRY") {
             return res.status(409).json({
                 status: 409,

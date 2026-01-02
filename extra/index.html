@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Socket Chat</title>
+</head>
+
+<body>
+    <h2>Socket Chat</h2>
+
+    <input id="userId" placeholder="Your User ID" />
+    <button onclick="register()">Register</button>
+
+    <br><br>
+
+    <input id="toUser" placeholder="Send To User ID" />
+    <input id="message" placeholder="Message" />
+    <button onclick="sendMessage()">Send</button>
+
+    <ul id="messages"></ul>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const socket = io("http://localhost:3050");
+
+        function register() {
+            const userId = document.getElementById("userId").value;
+            socket.emit("register", userId);
+        }
+
+        function sendMessage() {
+            const from = document.getElementById("userId").value;
+            const to = document.getElementById("toUser").value;
+            const message = document.getElementById("message").value;
+
+            socket.emit("send_message", { from, to, message });
+        }
+
+        socket.on("receive_message", (data) => {
+            const li = document.createElement("li");
+            li.innerText = `From ${data.from}: ${data.message}`;
+            document.getElementById("messages").appendChild(li);
+        });
+    </script>
+</body>
+
+</html>

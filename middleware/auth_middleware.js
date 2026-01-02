@@ -1,7 +1,6 @@
 import admin from "../utils/firebaseAdmin.js";
 import jwt from "jsonwebtoken";
 
-
 export const authorize = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
@@ -36,7 +35,7 @@ export const authority = (requiredAuthority) => {
         }
 
         // 2. Check if they have the specific authority
-        if (req.user.authorities && req.user.authorities.includes(requiredAuthority)) {
+        if (req.user.authorities && req.user.roles.includes(requiredAuthority)) {
             return next(); // Permission granted
         }
 
@@ -74,4 +73,27 @@ export const authFirebase = async (req, res, next) => {
         });
     }
 
+};
+
+// authenticate the socket's auth token
+export const verifySocketToken = async (socket, next) => {
+    try {
+
+        let token = socket.handshake.auth.token || socket.handshake.headers.token;
+
+        if (token.startsWith("Bearer ")) {
+            token = token.split(" ")[1];
+        }
+
+        if (!token) {
+            return next(new Error("Unauthorized: token is required"));
+        }
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        socket.user = decode;
+        next();
+    } catch (e) {
+        console.log("Socket verify error:", e.message);
+        // console.log("Socket verify error", e);
+        next(new Error("Unauthorized"));
+    }
 };
