@@ -69,7 +69,7 @@ export const authFirebase = async (req, res, next) => {
     } catch (error) {
         res.status(401).json({
             status: 401,
-            message: "Invalid token or token expired"
+            message: `Invalid token or token expired ${error}`
         });
     }
 
