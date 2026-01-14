@@ -33,3 +33,5 @@ export const buildAuthPayload = (rows) => {
         authorities: [...authorities]
     };
 };
+
+

@@ -7,6 +7,7 @@ import language_router from "./routes/languages_route.js";
 import agora_token_route from './routes/stream_token_route.js';
 import coins_route from "./routes/coins_route.js";
 import gift_routes from './routes/gifts_route.js';
+import image_route from './utils/image_kit_config.js';
 import { swaggerDocs } from "./swagger/swagger.js";
 
 const app = express();
@@ -37,6 +38,9 @@ app.use('/api/coins', coins_route);
 
 //gifts 
 app.use('/api/gifts', gift_routes);
+
+//image uploading
+app.use('/api/images', image_route);
 
 app.use((req, res) => res.status(404).send("Route not found"));
 
