@@ -1,24 +1,125 @@
 {
   "info": {
     "_postman_id": "1f60a552-0426-4a8d-90b7-bd01d34e3103",
-    "name": "Soulzaa_backend",
+    "name": "Soulzaa Backend API",
+    "description": "Complete Soulzaa backend API collection with all endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "id_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "chatId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "fileId",
+      "value": "",
+      "type": "string"
+    }
+  ],
   "item": [
     {
-      "name": "sign_in_up",
+      "name": "Authentication",
       "item": [
         {
-          "name": "check_user",
+          "name": "Sign Up",
+          "id": "52eb8c06-358b-4f15-943c-345e26faa486",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{id_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/sign_up",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "sign_up"
+              ]
+            },
+            "description": "Register a new user with Firebase ID token"
+          },
+          "response": []
+        },
+        {
+          "name": "Sign In",
+          "id": "be26a2cf-6a1b-4279-bdca-4fac9bbc3ae8",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{id_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/sign_in",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "sign_in"
+              ]
+            },
+            "description": "Sign in user with Firebase ID token"
+          },
+          "response": []
+        },
+        {
+          "name": "Check User",
           "id": "c177d674-2ec1-4552-9f83-f5b12dd67585",
           "request": {
             "method": "GET",
             "header": [
               {
-                "key": "{{id_token_key}}",
+                "key": "Authorization",
                 "value": "{{id_token}}",
-                "type": "text",
-                "uuid": "d9a1672d-725f-41dd-aed7-79c63af6add6"
+                "type": "text"
               }
             ],
             "url": {
@@ -30,84 +131,22 @@
                 "api",
                 "auth",
                 "check_user"
-              ],
-              "query": [
-                {
-                  "key": "{{id_token_key}}",
-                  "value": "{{id_token}}",
-                  "uuid": "f884212e-e986-420b-8632-18c05d7f68b2",
-                  "disabled": true
-                }
               ]
-            }
+            },
+            "description": "Check if user exists"
           },
           "response": []
         },
         {
-          "name": "sign_in",
-          "id": "be26a2cf-6a1b-4279-bdca-4fac9bbc3ae8",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "{{id_token_key}}",
-                "value": "{{id_token}}",
-                "type": "text",
-                "uuid": "2a191d50-5e09-46fa-a601-a3c873abe734"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/api/auth/sign_in",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "sign_in"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "sign_up",
-          "id": "52eb8c06-358b-4f15-943c-345e26faa486",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "{{id_token_key}}",
-                "value": "{{id_token}}",
-                "type": "text",
-                "uuid": "7dd7e5b0-c182-43b1-a85a-dbd65265a31e"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/api/auth/sign_in",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "sign_in"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "refresh_token",
+          "name": "Refresh Token",
           "id": "dab976f5-45b3-4693-9636-59afc2c19b7c",
           "request": {
             "method": "GET",
             "header": [
               {
-                "key": "{{refresh_token_key}}",
+                "key": "Authorization",
                 "value": "{{refresh_token}}",
-                "type": "text",
-                "uuid": "074d5fec-4d77-4c23-95b6-a30368624b88"
+                "type": "text"
               }
             ],
             "url": {
@@ -120,7 +159,8 @@
                 "auth",
                 "refresh_token"
               ]
-            }
+            },
+            "description": "Refresh authentication token"
           },
           "response": []
         }
@@ -128,34 +168,1335 @@
       "id": "d1ecb9a1-4ba7-499a-8476-850164172342"
     },
     {
-      "name": "coins",
+      "name": "Chat System",
       "item": [
         {
-          "name": "get_conis",
-          "id": "a67fe84a-c6f3-4813-bb5b-687e17afea49",
+          "name": "Chat Request Management",
+          "item": [
+            {
+              "name": "Get Requested Chats",
+              "id": "chat-req-1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/requests",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "requests"
+                  ]
+                },
+                "description": "Get all pending chat requests for the user"
+              },
+              "response": []
+            },
+            {
+              "name": "Create or Get Chat",
+              "id": "chat-req-2",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipientId\": \"user_id_here\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/chats/or-create",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "or-create"
+                  ]
+                },
+                "description": "Create a new chat or get existing 1-on-1 chat"
+              },
+              "response": []
+            },
+            {
+              "name": "Accept Chat Request",
+              "id": "chat-req-3",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/accept",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "accept"
+                  ]
+                },
+                "description": "Accept a pending chat request"
+              },
+              "response": []
+            },
+            {
+              "name": "Reject Chat Request",
+              "id": "chat-req-4",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/reject",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "reject"
+                  ]
+                },
+                "description": "Reject a pending chat request"
+              },
+              "response": []
+            }
+          ],
+          "id": "chat-req-folder"
+        },
+        {
+          "name": "Chat Messages",
+          "item": [
+            {
+              "name": "Get Active Chats",
+              "id": "chat-msg-1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/active?limit=10&page=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "active"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "description": "Get all active chats with pagination"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Chat Messages",
+              "id": "chat-msg-2",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/messages?limit=20&page=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "messages"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "description": "Get paginated messages for a specific chat"
+              },
+              "response": []
+            },
+            {
+              "name": "Search Chat Messages",
+              "id": "chat-msg-3",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/search?query=hello&limit=20",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "hello"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                },
+                "description": "Search messages in a specific chat"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Chat History",
+              "id": "chat-msg-4",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/user/{{userId}}/history?includeArchived=false",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "user",
+                    "{{userId}}",
+                    "history"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeArchived",
+                      "value": "false"
+                    }
+                  ]
+                },
+                "description": "Get chat history for a specific user"
+              },
+              "response": []
+            }
+          ],
+          "id": "chat-msg-folder"
+        },
+        {
+          "name": "Chat Management",
+          "item": [
+            {
+              "name": "Get Chat Details",
+              "id": "chat-mgmt-1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}"
+                  ]
+                },
+                "description": "Get detailed information about a chat"
+              },
+              "response": []
+            },
+            {
+              "name": "Block User",
+              "id": "chat-mgmt-2",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/block",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "block"
+                  ]
+                },
+                "description": "Block a user in a chat"
+              },
+              "response": []
+            },
+            {
+              "name": "Unblock User",
+              "id": "chat-mgmt-3",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/unblock",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "unblock"
+                  ]
+                },
+                "description": "Unblock a previously blocked user"
+              },
+              "response": []
+            },
+            {
+              "name": "Archive Chat",
+              "id": "chat-mgmt-4",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}/archive",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}",
+                    "archive"
+                  ]
+                },
+                "description": "Archive a chat"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Chat",
+              "id": "chat-mgmt-5",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/chats/{{chatId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "chats",
+                    "{{chatId}}"
+                  ]
+                },
+                "description": "Delete a chat and all its messages"
+              },
+              "response": []
+            }
+          ],
+          "id": "chat-mgmt-folder"
+        }
+      ],
+      "id": "chat-folder"
+    },
+    {
+      "name": "Media Upload",
+      "item": [
+        {
+          "name": "Get Upload Token",
+          "id": "media-1",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": ""
-            }
+              "raw": "{{base_url}}/api/media/get-upload-token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "media",
+                "get-upload-token"
+              ]
+            },
+            "description": "Get authentication token for client-side media upload"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Chat Media (Single)",
+          "id": "media-2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media/upload-chat-media",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "media",
+                "upload-chat-media"
+              ]
+            },
+            "description": "Upload a single media file (image/video/document)"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Chat Media (Bulk)",
+          "id": "media-3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media/bulk-upload",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "media",
+                "bulk-upload"
+              ]
+            },
+            "description": "Upload multiple media files at once (max 10)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Media Metadata",
+          "id": "media-4",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/media/{{fileId}}/metadata",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "media",
+                "{{fileId}}",
+                "metadata"
+              ]
+            },
+            "description": "Get metadata information about an uploaded file"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Media File",
+          "id": "media-5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fileId\": \"file_id_here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media/delete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "media",
+                "delete"
+              ]
+            },
+            "description": "Delete a media file from ImageKit"
           },
           "response": []
         }
       ],
-      "id": "063c6011-79da-429e-b70e-57d5f38fca1b"
+      "id": "media-folder"
     },
     {
-      "name": "New Request",
-      "id": "95280d0a-0ee9-4d01-b0bb-9705ee1b9838",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": ""
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "id": "user-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/user/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile"
+              ]
+            },
+            "description": "Get current user profile information"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All User Profiles",
+          "id": "user-2",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/get_all_user_profiles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "get_all_user_profiles"
+              ]
+            },
+            "description": "Get list of all user profiles"
+          },
+          "response": []
         }
-      },
-      "response": []
+      ],
+      "id": "user-folder"
+    },
+    {
+      "name": "Coins",
+      "item": [
+        {
+          "name": "Get Coin Balance",
+          "id": "coins-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/coins/get_coins",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "coins",
+                "get_coins"
+              ]
+            },
+            "description": "Get current coin balance for user"
+          },
+          "response": []
+        },
+        {
+          "name": "Purchase Coins",
+          "id": "coins-2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 100,\n  \"coins\": 1000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/coins/purchase_coins",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "coins",
+                "purchase_coins"
+              ]
+            },
+            "description": "Purchase coins with real currency"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Purchase History",
+          "id": "coins-3",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/coins/get_purchase_history",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "coins",
+                "get_purchase_history"
+              ]
+            },
+            "description": "Get user's coin purchase history"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Coins Transactions",
+          "id": "coins-4",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/coins/get_coins_transaction",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "coins",
+                "get_coins_transaction"
+              ]
+            },
+            "description": "Get all coin transactions for user"
+          },
+          "response": []
+        }
+      ],
+      "id": "coins-folder"
+    },
+    {
+      "name": "Gifts",
+      "item": [
+        {
+          "name": "Get Gifts",
+          "id": "gifts-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/gifts/get_gifts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "get_gifts"
+              ]
+            },
+            "description": "Get all available gifts"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Gift (Admin)",
+          "id": "gifts-2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rose\",\n  \"price\": 10,\n  \"image\": \"rose_url\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/gifts/add_gift",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "add_gift"
+              ]
+            },
+            "description": "Add a new gift (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Gift (Admin)",
+          "id": "gifts-3",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"gift_id\",\n  \"name\": \"Rose\",\n  \"price\": 15\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/gifts/update_gift",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "update_gift"
+              ]
+            },
+            "description": "Update gift details (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Enable Gift (Admin)",
+          "id": "gifts-4",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/gifts/enable_gift/gift_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "enable_gift",
+                "gift_id"
+              ]
+            },
+            "description": "Enable a gift (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Disable Gift (Admin)",
+          "id": "gifts-5",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/gifts/disable_gift/gift_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "disable_gift",
+                "gift_id"
+              ]
+            },
+            "description": "Disable a gift (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Gift (Admin)",
+          "id": "gifts-6",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/gifts/delete_gift/gift_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "delete_gift",
+                "gift_id"
+              ]
+            },
+            "description": "Delete a gift (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Is Gift Animated (Admin)",
+          "id": "gifts-7",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/gifts/is_gift_animated/gift_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gifts",
+                "is_gift_animated",
+                "gift_id"
+              ]
+            },
+            "description": "Update animated status of gift (Admin only)"
+          },
+          "response": []
+        }
+      ],
+      "id": "gifts-folder"
+    },
+    {
+      "name": "Live Streaming",
+      "item": [
+        {
+          "name": "Get Audio Lives",
+          "id": "live-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/get_audio_lives",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "get_audio_lives"
+              ]
+            },
+            "description": "Get all active audio lives"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Video Lives",
+          "id": "live-2",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/get_video_lives",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "get_video_lives"
+              ]
+            },
+            "description": "Get all active video lives"
+          },
+          "response": []
+        },
+        {
+          "name": "Start Live",
+          "id": "live-3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"liveType\": \"audio\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/start",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "start"
+              ]
+            },
+            "description": "Start a new live stream"
+          },
+          "response": []
+        },
+        {
+          "name": "Go Live",
+          "id": "live-4",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/go_live",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "go_live"
+              ]
+            },
+            "description": "Start broadcasting (change status to live)"
+          },
+          "response": []
+        },
+        {
+          "name": "Pause Live",
+          "id": "live-5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/pause",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "pause"
+              ]
+            },
+            "description": "Pause an active live stream"
+          },
+          "response": []
+        },
+        {
+          "name": "Resume Live",
+          "id": "live-6",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/resume",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "resume"
+              ]
+            },
+            "description": "Resume a paused live stream"
+          },
+          "response": []
+        },
+        {
+          "name": "End Live",
+          "id": "live-7",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/end",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "end"
+              ]
+            },
+            "description": "End an active live stream"
+          },
+          "response": []
+        }
+      ],
+      "id": "live-folder"
+    },
+    {
+      "name": "Stream Token",
+      "item": [
+        {
+          "name": "Get Agora Stream Token",
+          "id": "stream-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/get_stream_token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "get_stream_token"
+              ]
+            },
+            "description": "Get Agora stream token for live streaming"
+          },
+          "response": []
+        }
+      ],
+      "id": "stream-folder"
+    },
+    {
+      "name": "Location",
+      "item": [
+        {
+          "name": "Get Location Details",
+          "id": "location-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{id_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/location",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "location"
+              ]
+            },
+            "description": "Get location details"
+          },
+          "response": []
+        }
+      ],
+      "id": "location-folder"
+    },
+    {
+      "name": "Languages",
+      "item": [
+        {
+          "name": "Get Languages",
+          "id": "lang-1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/languages",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "languages"
+              ]
+            },
+            "description": "Get list of all available languages"
+          },
+          "response": []
+        }
+      ],
+      "id": "lang-folder"
     }
   ]
 }

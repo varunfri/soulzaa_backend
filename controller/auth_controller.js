@@ -184,7 +184,7 @@ export const sign_in = async (req, res) => {
         res.status(200).header(
             'Authorization', `Bearer ${jwtToken}`
         ).header(
-            'X-Refresh-Token', refreshToken
+            'X-Refresh-Token', `Bearer ${refreshToken}`
         ).json({
             status: 200,
             message: "Login Successful",

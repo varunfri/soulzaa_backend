@@ -7,15 +7,14 @@ import connectMongo from "./db_config/mongo_connect.js";
 import { connect_mysql } from "./db_config/mysql_connect.js";
 import { verifySocketToken } from "./middleware/auth_middleware.js";
 import { initSocket } from "./utils/init_socket.js";
-import { chatRequestHandlers } from "./controller/socket_controllers/message_socket.js";
+import { messageSocketHandlers } from "./controller/socket_controllers/message_socket.js";
+import { liveStreamHandlers } from "./controller/socket_controllers/live_socket.js";
 
 const httpServer = createServer(app);
 
 dotenv.config({
     path: './.env',
 });
-
-
 
 const io = initSocket(httpServer);
 io.use(verifySocketToken);
@@ -25,12 +24,24 @@ export const onlineUsers = new Map();
 io.on("connection", async (socket) => {
     const user_id = socket.user.id;
     onlineUsers.set(user_id, socket.id);
-    console.log(`User ${user_id} added with ${socket.id}`);
+    console.log(`User ${user_id} connected with socket ${socket.id}`);
 
-    chatRequestHandlers(io, socket);
+    // Initialize socket handlers
+    messageSocketHandlers(io, socket);
+    liveStreamHandlers(io, socket);
 
     socket.on("disconnect", async () => {
-        console.log("Disconnected user", socket.id);
+        onlineUsers.delete(user_id);
+        console.log(`User ${user_id} disconnected from socket ${socket.id}`);
+        socket.rooms.forEach(roomName => {
+            if (roomName.startsWith("chat_")) {
+                socket.to(roomName).emit("user_offline", {
+                    user_id,
+                    chatId: roomName.replace("chat_", ""),
+                    timestamp: new Date(),
+                });
+            }
+        });
     });
 });
 

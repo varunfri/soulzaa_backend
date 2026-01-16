@@ -206,30 +206,37 @@ export const delete_gift = async (req, res) => {
     }
 
 };
-
 export const get_gifts = async (req, res) => {
     try {
-        const [result] = await mysql_db.query(
-            `select gift_id, gift_name, gift_icon_url, coin_cost,
-            is_active, is_animated
-            from gifts;`
-        );
+        const [result] = await mysql_db.query(`
+      SELECT gift_id, gift_name, gift_icon_url, coin_cost, is_active, is_animated
+      FROM gifts
+    `);
 
-        if (result.length === 0) {
+        if (!result.length) {
             return res.status(404).json({
                 status: 404,
                 message: "No gifts found"
             });
         }
 
+        const data = result.map(gift => ({
+            giftId: gift.gift_id,
+            giftName: gift.gift_name,
+            giftIcon: gift.gift_icon_url,
+            coinCost: gift.coin_cost,
+            isActive: Boolean(gift.is_active),
+            isAnimated: Boolean(gift.is_animated)
+        }));
+
         return res.status(200).json({
             status: 200,
             message: "Gifts fetched successfully",
-            data: result
+            data
         });
 
     } catch (e) {
-        console.log(e);
+        console.error(e);
         return res.status(500).json({
             status: 500,
             message: "Internal server error"

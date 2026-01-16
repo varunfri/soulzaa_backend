@@ -142,3 +142,6 @@ vite.config.ts.timestamp-*
 
 # ignore serviceAccountKey.json
 ./utils/serviceAccountKey.json
+
+# ignore the .md files
+.md 

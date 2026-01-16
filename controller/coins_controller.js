@@ -59,7 +59,7 @@ export const purchase_coins = async (req, res) => {
         );
 
         const [walletResult] = await connection.query(
-            `UPDATE user_wallet 
+            `UPDATE user_wallets
         SET balance = balance + ? 
         WHERE user_id = ? 
         AND NOT EXISTS (
@@ -75,13 +75,13 @@ export const purchase_coins = async (req, res) => {
             });
         }
 
-        await conn.query(
+        await connection.query(
             `UPDATE coin_purchases SET credited = 1, created_at = NOW() WHERE gateway_txn_id = ?`,
             [gateway_txn_id]
         );
 
 
-        const [coins_balance] = (await connection).query(
+        const [coins_balance] = await connection.query(
             `select wallet_id, balance 
             from user_wallets 
             where user_id =?
@@ -151,36 +151,31 @@ export const get_purchase_history = async (req, res) => {
 };
 
 export const get_coins_transactions = async (req, res) => {
-    // only getting data from coin_transactions based on user_id, 
     const user_id = req.user.id;
 
     try {
         const [rows] = await mysql_db.query(
-            ` select coins, transaction_type, reference_id,description, balance_after, status, created_at
-              from coin_transactions 
-              where user_id = ?
-            `, [user_id]
+            `SELECT coins, transaction_type, reference_id, description,
+              balance_after, status, created_at
+       FROM coin_transactions
+       WHERE user_id = ?
+       ORDER BY created_at DESC`,
+            [user_id]
         );
 
-        if (rows.length === 0) {
-            return res.status(404).json({
-                status: 404,
-                message: "No transactions history found"
-            });
-        }
-
-        res.status(200).json({
+        return res.status(200).json({
             status: 200,
-            message: "Coins transaction history",
-            data: rows[0]
+            message: rows.length
+                ? "Coins transaction history fetched successfully"
+                : "No transactions found",
+            data: rows
         });
 
     } catch (e) {
-        console.log(e);
-        res.status(500).json({
+        console.error(e);
+        return res.status(500).json({
             status: 500,
             message: "Internal server error"
         });
     }
-
 };

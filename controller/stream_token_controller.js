@@ -12,10 +12,10 @@ export const agora_token = async (req, res) => {
         });
     }
 
-    const { uid, channel_name, role } = req.body || {};
+    const { uid, channelName, role } = req.body || {};
 
 
-    if (!uid || !channel_name || !role) {
+    if (!uid || !channelName || !role) {
         return res.status(400).json({
             status: 400,
             message: "channel name, uid and role is required"
@@ -40,7 +40,7 @@ export const agora_token = async (req, res) => {
         const token = RtcTokenBuilder.buildTokenWithUid(
             app_id,
             app_cert,
-            channel_name,
+            channelName,
             uid,
             user_role,
             privilegeExpireTime

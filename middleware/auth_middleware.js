@@ -75,25 +75,27 @@ export const authFirebase = async (req, res, next) => {
 
 };
 
-// authenticate the socket's auth token
-export const verifySocketToken = async (socket, next) => {
+// verify token
+export const verifySocketToken = (socket, next) => {
     try {
+        let authorization =
+            socket.handshake.auth?.authorization ||
+            socket.handshake.headers?.authorization;
 
-        let token = socket.handshake.auth.token || socket.handshake.headers.token;
-
-        if (token.startsWith("Bearer ")) {
-            token = token.split(" ")[1];
-        }
-
-        if (!token) {
+        if (!authorization) {
             return next(new Error("Unauthorized: token is required"));
         }
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        socket.user = decode;
+
+        if (authorization.startsWith("Bearer ")) {
+            authorization = authorization.split(" ")[1];
+        }
+
+        const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
+
+        socket.user = decoded; // attach user to socket
         next();
-    } catch (e) {
-        console.log("Socket verify error:", e.message);
-        // console.log("Socket verify error", e);
+    } catch (err) {
+        console.error("Socket verify error:", err.message);
         next(new Error("Unauthorized"));
     }
 };

@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const chat = new Schema(
+/**
+ * Chat Conversation Schema
+ * Stores metadata about chat conversations between users
+ */
+const chatSchema = new Schema(
     {
         participants: [
             {
@@ -13,7 +17,7 @@ const chat = new Schema(
 
         status: {
             type: String,
-            enum: ["pending", "accepted", "rejected", "auto_accepted"],
+            enum: ["pending", "accepted", "rejected", "auto_accepted", "blocked"],
             default: "pending",
         },
 
@@ -37,37 +41,153 @@ const chat = new Schema(
             type: Date,
             default: null,
         },
+
+        lastMessageType: {
+            type: String,
+            enum: ["text", "image", "video", "file"],
+            default: "text",
+        },
+
+        lastSenderId: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+
+        unreadCount: {
+            type: Map,
+            of: Number,
+            default: new Map(), // { userId: unreadCount }
+        },
+
+        isArchived: {
+            type: Boolean,
+            default: false,
+        },
+
+        blockedBy: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            default: null,
+        },
     },
     {
-        timestamps: true, // creates createdAt & updatedAt automatically
+        timestamps: true,
+        indexes: [
+            { key: { participants: 1 } },
+            { key: { lastMessageAt: -1 } },
+            { key: { status: 1 } },
+        ],
     }
 );
 
+/**
+ * Message Schema
+ * Stores individual chat messages with support for media
+ */
+const messageSchema = new Schema(
+    {
+        chatId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "chat",
+            index: true,
+        },
 
+        senderId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "User",
+        },
 
-const message = new Schema({
-    chatId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "Chat",
-    },
-    senderId: {
-        type: Number,
-        required: true,
-    },
-    receiverId: {
-        type: Number,
-        required: true,
-    },
-    text: {
-        type: String,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
+        receiverId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "User",
+        },
 
-export const chatSchema = mongoose.model("chat", chat);
-export const messageSchema = mongoose.model("message", message);
+        content: {
+            type: String,
+            default: "",
+        },
+
+        messageType: {
+            type: String,
+            enum: ["text", "image", "video", "file"],
+            default: "text",
+        },
+
+        media: {
+            url: String,
+            fileId: String, // ImageKit fileId for deletion
+            fileName: String,
+            fileSize: Number,
+            mimeType: String,
+            duration: Number, // for videos
+        },
+
+        isEdited: {
+            type: Boolean,
+            default: false,
+        },
+
+        editedAt: {
+            type: Date,
+            default: null,
+        },
+
+        readBy: [
+            {
+                userId: {
+                    type: Schema.Types.ObjectId,
+                    ref: "User",
+                },
+                readAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+
+        deletedBy: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+            },
+        ],
+
+        replyTo: {
+            type: Schema.Types.ObjectId,
+            ref: "message",
+            default: null,
+        },
+
+        reactions: [
+            {
+                userId: {
+                    type: Schema.Types.ObjectId,
+                    ref: "User",
+                },
+                emoji: String,
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+    },
+    {
+        timestamps: true,
+        indexes: [
+            { key: { chatId: 1, createdAt: -1 } },
+            { key: { senderId: 1 } },
+            { key: { createdAt: -1 } },
+        ],
+    }
+);
+
+export const ChatModel = mongoose.model("chat", chatSchema);
+export const MessageModel = mongoose.model("message", messageSchema);
+
+// Keep old exports for backward compatibility
+// export const chatSchema = ChatModel;
+// export const messageSchema = MessageModel;
