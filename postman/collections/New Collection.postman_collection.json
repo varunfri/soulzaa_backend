@@ -5,43 +5,6 @@
     "description": "Complete Soulzaa backend API collection with all endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:8000",
-      "type": "string"
-    },
-    {
-      "key": "id_token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "refresh_token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "jwt_token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "chatId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "userId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "fileId",
-      "value": "",
-      "type": "string"
-    }
-  ],
   "item": [
     {
       "name": "Authentication",
@@ -85,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "Authorization",
+                "key": "X-Firebase-Token",
                 "value": "{{id_token}}",
                 "type": "text"
               },
@@ -117,7 +80,7 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
+                "key": "X-Firebase-Token",
                 "value": "{{id_token}}",
                 "type": "text"
               }
@@ -144,9 +107,30 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
+                "key": "{{refresh_token_key}}",
                 "value": "{{refresh_token}}",
                 "type": "text"
+              },
+              {
+                "key": "",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "36170772-915c-49e4-a025-8e89663baeff",
+                "disabled": true
+              },
+              {
+                "key": "{{refresh_token_key}}",
+                "value": "{{refresh_token_2}}",
+                "type": "text",
+                "uuid": "a63d0aa0-a813-4426-a05d-e8fa750a1d15",
+                "disabled": true
+              },
+              {
+                "key": "",
+                "value": "{{jwt_token_2}}",
+                "type": "text",
+                "uuid": "a25d9ad3-b790-4fe3-bf57-08818e2120c1",
+                "disabled": true
               }
             ],
             "url": {
@@ -778,7 +762,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
@@ -795,7 +779,69 @@
             },
             "description": "Get current user profile information"
           },
-          "response": []
+          "response": [
+            {
+              "id": "f776eded-5fcd-45ce-922b-dd79a3fbc527",
+              "name": "User Profile Fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/user/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user",
+                    "profile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "659"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"293-NCdCyM0tmy6J+lbW0EyXh74+0NQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 19 Jan 2026 13:37:30 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-19T13:37:50.786Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Profile fetched successful\",\n    \"data\": {\n        \"user_data\": {\n            \"id\": 3,\n            \"full_name\": \"Soulzaa Admin\",\n            \"profile_picture\": \"https://ik.imagekit.io/jaul95sx2/profile_pictures/profile_3_1768762524967_photo-1557053910-d9eadeed1c58_DvX0hftxS.jpeg\",\n            \"dob\": \"2001-01-01\",\n            \"email\": \"vv137941@gmail.com\",\n            \"gender\": \"male\",\n            \"username\": \"FozLw_ash1\"\n        },\n        \"roles\": [\n            \"ADMIN\",\n            \"CREATOR\",\n            \"MODERATOR\",\n            \"USER\"\n        ],\n        \"authorities\": [\n            \"PROFILE_VIEW\",\n            \"PROFILE_EDIT\",\n            \"CHAT_SEND\",\n            \"CHAT_VIEW\",\n            \"MEDIA_UPLOAD\",\n            \"STREAM_CREATE\",\n            \"STREAM_START\",\n            \"STREAM_END\",\n            \"STREAM_MODERATE\",\n            \"USER_REPORT_VIEW\",\n            \"USER_WARN\",\n            \"USER_SUSPEND\",\n            \"USER_BAN\",\n            \"ROLE_ASSIGN\",\n            \"AUTHORITY_ASSIGN\",\n            \"SYSTEM_CONFIG\",\n            \"ADMIN_PANEL_ACCESS\"\n        ]\n    }\n}"
+            }
+          ]
         },
         {
           "name": "Get All User Profiles",
@@ -805,7 +851,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
@@ -822,13 +868,423 @@
             },
             "description": "Get list of all user profiles"
           },
-          "response": []
+          "response": [
+            {
+              "id": "ee7f8103-7495-4534-acb0-f56c4c18843e",
+              "name": "Profiles fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/users/get_all_user_profiles",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "get_all_user_profiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "601"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"259-0oTzZAVqsfkS+4dr4BlIgjgLUyo\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:00:42 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:01:44.694Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"User profiles fetched\",\n    \"data\": [\n        {\n            \"user_id\": 14,\n            \"full_name\": \"Varun\",\n            \"username\": \"hZ29k_mkE3\",\n            \"profile_picture\": null,\n            \"country\": \"United States\",\n            \"country_code\": \"US\",\n            \"vip_level_id\": 0\n        },\n        {\n            \"user_id\": 12,\n            \"full_name\": \"Soulzaa\",\n            \"username\": \"EvxEv_Y0i2\",\n            \"profile_picture\": null,\n            \"country\": \"India\",\n            \"country_code\": \"IN\",\n            \"vip_level_id\": 0\n        },\n        {\n            \"user_id\": 3,\n            \"full_name\": \"Soulzaa Admin\",\n            \"username\": \"FozLw_ash1\",\n            \"profile_picture\": \"https://ik.imagekit.io/jaul95sx2/profile_pictures/profile_3_1768762524967_photo-1557053910-d9eadeed1c58_DvX0hftxS.jpeg\",\n            \"country\": \"India\",\n            \"country_code\": \"IN\",\n            \"vip_level_id\": 0\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update user profile",
+          "id": "a7043259-9861-4f66-b1a1-3b93081b625c",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "full_name",
+                  "value": "Soulzaa Admin",
+                  "type": "text",
+                  "uuid": "4e8453a6-b7cd-4a47-9cbb-fea7cd258331",
+                  "disabled": true
+                },
+                {
+                  "key": "dob",
+                  "value": "2015-01-01",
+                  "type": "text",
+                  "uuid": "8295e367-ce32-41a7-83a8-305fd66c419d",
+                  "disabled": true
+                },
+                {
+                  "key": "profile_picture",
+                  "type": "file",
+                  "uuid": "e663d745-9090-41c8-a11e-ca37f4bd905a",
+                  "src": [
+                    "postman-cloud:///1f03d475-0bec-4fa0-9c8d-d36787a012db"
+                  ],
+                  "disabled": true
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "type": "text",
+                  "uuid": "0f29bbb1-470b-464d-8317-4c5f92ba33ac",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/user/update_profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "update_profile"
+              ]
+            },
+            "description": "Get current user profile information"
+          },
+          "response": [
+            {
+              "id": "91e46be8-946e-4461-9f0d-98d8f0203685",
+              "name": "profile updated",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "full_name",
+                      "value": "Soulzaa Admin",
+                      "type": "text",
+                      "uuid": "4e8453a6-b7cd-4a47-9cbb-fea7cd258331"
+                    },
+                    {
+                      "key": "dob",
+                      "value": "2001-01-01",
+                      "type": "text",
+                      "uuid": "8295e367-ce32-41a7-83a8-305fd66c419d"
+                    },
+                    {
+                      "key": "profile_picture",
+                      "type": "file",
+                      "uuid": "e663d745-9090-41c8-a11e-ca37f4bd905a",
+                      "src": [
+                        "postman-cloud:///1f03d475-0bec-4fa0-9c8d-d36787a012db"
+                      ],
+                      "disabled": true
+                    },
+                    {
+                      "key": "gender",
+                      "value": "male",
+                      "type": "text",
+                      "uuid": "0f29bbb1-470b-464d-8317-4c5f92ba33ac"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/user/update_profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user",
+                    "update_profile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "278"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"116-YkfQ3aNFSnV9iRk861PaYe7qMig\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 18:58:51 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T18:59:07.364Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Profile updated successfully\",\n    \"data\": {\n        \"user_id\": 3,\n        \"full_name\": \"Soulzaa Admin\",\n        \"dob\": \"2001-01-01\",\n        \"gender\": \"male\",\n        \"profile_picture\": \"https://ik.imagekit.io/jaul95sx2/profile_pictures/profile_3_1768762524967_photo-1557053910-d9eadeed1c58_DvX0hftxS.jpeg\"\n    }\n}"
+            },
+            {
+              "id": "1cdc1255-9ff1-41cb-a34a-f150a0d9edae",
+              "name": "unauthorized access",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "full_name",
+                      "value": "Soulzaa Admin",
+                      "type": "text",
+                      "uuid": "4e8453a6-b7cd-4a47-9cbb-fea7cd258331",
+                      "disabled": true
+                    },
+                    {
+                      "key": "dob",
+                      "value": "2001-01-01",
+                      "type": "text",
+                      "uuid": "8295e367-ce32-41a7-83a8-305fd66c419d",
+                      "disabled": true
+                    },
+                    {
+                      "key": "profile_picture",
+                      "type": "file",
+                      "uuid": "e663d745-9090-41c8-a11e-ca37f4bd905a",
+                      "src": [
+                        "postman-cloud:///1f03d475-0bec-4fa0-9c8d-d36787a012db"
+                      ],
+                      "disabled": true
+                    },
+                    {
+                      "key": "gender",
+                      "value": "male",
+                      "type": "text",
+                      "uuid": "0f29bbb1-470b-464d-8317-4c5f92ba33ac",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/user/update_profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user",
+                    "update_profile"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "44"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2c-hqfrcwjxxdH1dNE2Tfo2rP7wSBA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 18:59:50 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T18:59:51.706Z",
+              "body": "{\n    \"status\": 401,\n    \"message\": \"Not authenticated\"\n}"
+            },
+            {
+              "id": "6bd93f3e-da85-489b-9282-3c293dc0e139",
+              "name": "must be 18",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "full_name",
+                      "value": "Soulzaa Admin",
+                      "type": "text",
+                      "uuid": "4e8453a6-b7cd-4a47-9cbb-fea7cd258331",
+                      "disabled": true
+                    },
+                    {
+                      "key": "dob",
+                      "value": "2015-01-01",
+                      "type": "text",
+                      "uuid": "8295e367-ce32-41a7-83a8-305fd66c419d"
+                    },
+                    {
+                      "key": "profile_picture",
+                      "type": "file",
+                      "uuid": "e663d745-9090-41c8-a11e-ca37f4bd905a",
+                      "src": [
+                        "postman-cloud:///1f03d475-0bec-4fa0-9c8d-d36787a012db"
+                      ],
+                      "disabled": true
+                    },
+                    {
+                      "key": "gender",
+                      "value": "male",
+                      "type": "text",
+                      "uuid": "0f29bbb1-470b-464d-8317-4c5f92ba33ac",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/user/update_profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user",
+                    "update_profile"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "61"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3d-Sbb6HIqbMIHLk0pmpX22X69+MH0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:00:18 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:00:20.849Z",
+              "body": "{\n    \"status\": 400,\n    \"message\": \"User must be at least 18 years old\"\n}"
+            }
+          ]
         }
       ],
       "id": "user-folder"
     },
     {
-      "name": "Coins",
+      "name": "User Coins",
       "item": [
         {
           "name": "Get Coin Balance",
@@ -838,7 +1294,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
@@ -855,7 +1311,69 @@
             },
             "description": "Get current coin balance for user"
           },
-          "response": []
+          "response": [
+            {
+              "id": "0f39dcf2-2753-488a-94cb-b2036155f103",
+              "name": "Balance fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coins/get_coins",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coins",
+                    "get_coins"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "86"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"56-eBwQ7pVV+KiEqDRnrXUq5MN0FoU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:42:12 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:42:19.578Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Wallet details fetched\",\n    \"data\": {\n        \"wallet_id\": 1,\n        \"balance\": 180\n    }\n}"
+            }
+          ]
         },
         {
           "name": "Purchase Coins",
@@ -901,24 +1419,86 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": " {{jwt_token}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/coins/get_purchase_history",
+              "raw": "{{base_url}}/api/user_coins/get_purchase_history",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "coins",
+                "user_coins",
                 "get_purchase_history"
               ]
             },
             "description": "Get user's coin purchase history"
           },
-          "response": []
+          "response": [
+            {
+              "id": "8081466f-9410-4dbe-a793-90cf11120a77",
+              "name": "Purchase History fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": " {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coins/get_purchase_history",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coins",
+                    "get_purchase_history"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "362"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"16a-C6jrCkjz8Ly3G0TXVnTNSYBI3ik\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:42:37 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:42:40.194Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Purchase history fetched\",\n    \"data\": [\n        {\n            \"package_id\": 1,\n            \"gateway\": \"UPI\",\n            \"gateway_txn_id\": \"12345\",\n            \"amount_paid\": \"59.00\",\n            \"currency\": \"INR\",\n            \"status\": \"SUCCESS\",\n            \"created_at\": \"2026-01-16 14:50:31\"\n        },\n        {\n            \"package_id\": 1,\n            \"gateway\": \"UPI\",\n            \"gateway_txn_id\": \"12346\",\n            \"amount_paid\": \"59.00\",\n            \"currency\": \"INR\",\n            \"status\": \"SUCCESS\",\n            \"created_at\": \"2026-01-16 14:51:13\"\n        }\n    ]\n}"
+            }
+          ]
         },
         {
           "name": "Get Coins Transactions",
@@ -928,58 +1508,183 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": " {{jwt_token}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/coins/get_coins_transaction",
+              "raw": "{{base_url}}/api/user_coins/get_coins_transaction",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "coins",
+                "user_coins",
                 "get_coins_transaction"
               ]
             },
             "description": "Get all coin transactions for user"
           },
-          "response": []
-        }
-      ],
-      "id": "coins-folder"
-    },
-    {
-      "name": "Gifts",
-      "item": [
+          "response": [
+            {
+              "id": "4293616d-e21e-4c30-85a1-d6305f70b73e",
+              "name": "Coins Transactions",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": " {{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/coins/get_coins_transaction",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coins",
+                    "get_coins_transaction"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "239"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"ef-emsxWgxE2qzOsNDMrXg5nr8uRs0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 20:14:55 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T20:16:51.312Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Coins transaction history fetched successfully\",\n    \"data\": [\n        {\n            \"coins\": 10,\n            \"transaction_type\": \"GIFT_SENT\",\n            \"reference_id\": null,\n            \"description\": null,\n            \"balance_after\": 170,\n            \"status\": \"SUCCESS\",\n            \"created_at\": \"2026-01-19 01:43:13\"\n        }\n    ]\n}"
+            }
+          ]
+        },
         {
-          "name": "Get Gifts",
-          "id": "gifts-1",
+          "name": "Get Coin Packages",
+          "id": "906fdf8c-d2a6-4d2b-8240-7dc973f75b6c",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
-                "type": "text"
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "b2cfc798-9da0-43b2-9edd-b6e6b2f1f5d2"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/gifts/get_gifts",
+              "raw": "{{base_url}}/api/user_coins/get_coin_packages",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
-                "get_gifts"
+                "user_coins",
+                "get_coin_packages"
               ]
-            },
-            "description": "Get all available gifts"
+            }
           },
-          "response": []
-        },
+          "response": [
+            {
+              "id": "6d5e7280-f615-4c52-bc55-c3fe9657565f",
+              "name": "Coin Packages",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "b2cfc798-9da0-43b2-9edd-b6e6b2f1f5d2"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/user_coins/get_coin_packages",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user_coins",
+                    "get_coin_packages"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1248"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"4e0-gcpdr2XOzzR2c0GU8t71QrlLqqE\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 23:04:40 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T23:06:27.166Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Coin packages fetched\",\n    \"data\": [\n        {\n            \"package_id\": 1,\n            \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768774520975_vip_cup_big_gold_uTLjw3n0z.png\",\n            \"coins\": 199,\n            \"price\": 190.55,\n            \"currency\": \"INR\",\n            \"add_on_desc\": \"Add on desc\",\n            \"bonus_coins\": 10\n        },\n        {\n            \"package_id\": 2,\n            \"banner\": null,\n            \"coins\": 250,\n            \"price\": 99,\n            \"currency\": \"INR\",\n            \"add_on_desc\": null,\n            \"bonus_coins\": 0\n        },\n        {\n            \"package_id\": 3,\n            \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768775412548_vip_cup_big_silver_8hVOseqpA.png\",\n            \"coins\": 150,\n            \"price\": 90.99,\n            \"currency\": \"inr\",\n            \"add_on_desc\": \"Popular\",\n            \"bonus_coins\": 5\n        },\n        {\n            \"package_id\": 5,\n            \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768775545964_vip_cup_big_silver_Mgnx1M_U3.png\",\n            \"coins\": 150,\n            \"price\": 90.99,\n            \"currency\": \"inr\",\n            \"add_on_desc\": \"Popular\",\n            \"bonus_coins\": 5\n        },\n        {\n            \"package_id\": 7,\n            \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776165845_big_star_04_3x_RREzy_-zK.webp\",\n            \"coins\": 150,\n            \"price\": 90.99,\n            \"currency\": \"inr\",\n            \"add_on_desc\": \"Best\",\n            \"bonus_coins\": 10\n        },\n        {\n            \"package_id\": 9,\n            \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776213983_big_star_04_3x_YmnM81FVeA.webp\",\n            \"coins\": 150,\n            \"price\": 90.99,\n            \"currency\": \"INR\",\n            \"add_on_desc\": \"Best\",\n            \"bonus_coins\": 10\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ],
+      "id": "coins-folder"
+    },
+    {
+      "name": "Admin Gift Manage",
+      "item": [
         {
           "name": "Add Gift (Admin)",
           "id": "gifts-2",
@@ -988,7 +1693,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               },
               {
@@ -998,23 +1703,227 @@
               }
             ],
             "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Rose\",\n  \"price\": 10,\n  \"image\": \"rose_url\"\n}"
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "gift_banner",
+                  "type": "file",
+                  "uuid": "31fc1dbd-571c-4502-bdf5-b26497baeefe",
+                  "src": [
+                    "/D:/flutter-sdk/Downloads/tango/tango/assets/images/vip_cup_small_bronze.png"
+                  ]
+                },
+                {
+                  "key": "gift_name",
+                  "value": "bronze_cup",
+                  "type": "text",
+                  "uuid": "aa345646-a303-40ec-bf42-33241ac70d58"
+                },
+                {
+                  "key": "coin_cost",
+                  "value": "20",
+                  "type": "text",
+                  "uuid": "bcb0f548-3d79-48aa-a13f-fd595ce7f8e2"
+                }
+              ]
             },
             "url": {
-              "raw": "{{base_url}}/api/gifts/add_gift",
+              "raw": "{{base_url}}/api/admin_gift/add_gift",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
+                "admin_gift",
                 "add_gift"
               ]
             },
             "description": "Add a new gift (Admin only)"
           },
-          "response": []
+          "response": [
+            {
+              "id": "bceff3e0-682e-4570-8c36-a695f99c386c",
+              "name": "Gift Added",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "gift_banner",
+                      "type": "file",
+                      "uuid": "31fc1dbd-571c-4502-bdf5-b26497baeefe",
+                      "src": [
+                        "/D:/flutter-sdk/Downloads/tango/tango/assets/images/vip_cup_small_bronze.png"
+                      ]
+                    },
+                    {
+                      "key": "gift_name",
+                      "value": "bronze_cup",
+                      "type": "text",
+                      "uuid": "aa345646-a303-40ec-bf42-33241ac70d58"
+                    },
+                    {
+                      "key": "coin_cost",
+                      "value": "20",
+                      "type": "text",
+                      "uuid": "bcb0f548-3d79-48aa-a13f-fd595ce7f8e2"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/add_gift",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "add_gift"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "225"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"e1-HXZ+UXawuZVj9fF+RfRogeL5S2U\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 18:26:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T18:26:48.954Z",
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Gift added successfully\",\n    \"data\": {\n        \"gift_id\": 13,\n        \"gift_name\": \"bronze_cup\",\n        \"gift_icon_url\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760762160_vip_cup_small_bronze_B6ntr73Qx.png\",\n        \"coin_cost\": \"20\"\n    }\n}"
+            },
+            {
+              "id": "95ce8b68-1913-4b3d-b99b-68495cfbdacc",
+              "name": "Gift exists",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "gift_banner",
+                      "type": "file",
+                      "uuid": "31fc1dbd-571c-4502-bdf5-b26497baeefe",
+                      "src": [
+                        "/D:/flutter-sdk/Downloads/tango/tango/assets/images/vip_cup_small_bronze.png"
+                      ]
+                    },
+                    {
+                      "key": "gift_name",
+                      "value": "bronze_cup",
+                      "type": "text",
+                      "uuid": "aa345646-a303-40ec-bf42-33241ac70d58"
+                    },
+                    {
+                      "key": "coin_cost",
+                      "value": "20",
+                      "type": "text",
+                      "uuid": "bcb0f548-3d79-48aa-a13f-fd595ce7f8e2"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/add_gift",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "add_gift"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "61"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3d-AhkDxytKGWD3vGji3y4fwd7tfnU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 18:42:42 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T18:43:28.884Z",
+              "body": "{\n    \"status\": 409,\n    \"message\": \"Gift already exist with given name\"\n}"
+            }
+          ]
         },
         {
           "name": "Update Gift (Admin)",
@@ -1035,22 +1944,112 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"gift_id\",\n  \"name\": \"Rose\",\n  \"price\": 15\n}"
+              "raw": "{\n  \"gift_id\": \"gift_id\",\n  \"gift_name\": \"Rose\",\n  \"coin_cost\": 15\n}"
             },
             "url": {
-              "raw": "{{base_url}}/api/gifts/update_gift",
+              "raw": "{{base_url}}/api/admin_gift/update_gift",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
+                "admin_gift",
                 "update_gift"
               ]
             },
             "description": "Update gift details (Admin only)"
           },
-          "response": []
+          "response": [
+            {
+              "id": "18ffb301-2d81-4fed-9bfa-04d9d47eae86",
+              "name": "Gift updated",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "gift_id",
+                      "value": "11",
+                      "type": "text",
+                      "uuid": "cd19e3f4-cae8-439d-a170-6570c861a00e"
+                    },
+                    {
+                      "key": "gift_name",
+                      "value": "star",
+                      "type": "text",
+                      "uuid": "00a4c15d-48eb-4cea-940a-3e335a1a118b"
+                    },
+                    {
+                      "key": "coin_cost",
+                      "value": "10",
+                      "type": "text",
+                      "uuid": "bb8cb98c-e5f3-42b0-b2c2-18c86e1cc10a"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/update_gift",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "update_gift"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "226"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"e2-8v7H9P4AhBnSrQEAAhgTgHaCtvA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 18:49:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T18:49:11.833Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Gift details updated successfully\",\n    \"data\": {\n        \"gift_id\": \"11\",\n        \"gift_name\": \"star\",\n        \"gift_icon_url\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760540851_big_star_06_3x_h_Fwojl90.webp\",\n        \"coin_cost\": \"10\"\n    }\n}"
+            }
+          ]
         },
         {
           "name": "Enable Gift (Admin)",
@@ -1060,25 +2059,100 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/gifts/enable_gift/gift_id",
+              "raw": "{{base_url}}/api/admin_gift/enable_gift/:gift_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
+                "admin_gift",
                 "enable_gift",
-                "gift_id"
+                ":gift_id"
+              ],
+              "variable": [
+                {
+                  "key": "gift_id",
+                  "value": "11"
+                }
               ]
             },
             "description": "Enable a gift (Admin only)"
           },
-          "response": []
+          "response": [
+            {
+              "id": "9c28134a-302b-495c-9a93-c2089d371117",
+              "name": "Gift Enabled",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/enable_gift/:gift_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "enable_gift",
+                    ":gift_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "gift_id",
+                      "value": "11"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "52"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"34-rBsPgJz6i6l2OEB+RYR7gT6u+TI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:29:38 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:29:40.398Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Gift enabled successfully\"\n}"
+            }
+          ]
         },
         {
           "name": "Disable Gift (Admin)",
@@ -1088,25 +2162,100 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/gifts/disable_gift/gift_id",
+              "raw": "{{base_url}}/api/admin_gift/disable_gift/:gift_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
+                "admin_gift",
                 "disable_gift",
-                "gift_id"
+                ":gift_id"
+              ],
+              "variable": [
+                {
+                  "key": "gift_id",
+                  "value": "11"
+                }
               ]
             },
             "description": "Disable a gift (Admin only)"
           },
-          "response": []
+          "response": [
+            {
+              "id": "c0e1b41a-cf43-40f5-ad72-4d709c9bf5ad",
+              "name": "Gift Disabled",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/disable_gift/:gift_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "disable_gift",
+                    ":gift_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "gift_id",
+                      "value": "11"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "53"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"35-hf//7E8cmfI3Hg1pRcbGXJn61e4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:29:24 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:29:26.417Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Gift disabled successfully\"\n}"
+            }
+          ]
         },
         {
           "name": "Delete Gift (Admin)",
@@ -1121,15 +2270,21 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/gifts/delete_gift/gift_id",
+              "raw": "{{base_url}}/api/admin_gift/delete_gift/:gift_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
+                "admin_gift",
                 "delete_gift",
-                "gift_id"
+                ":gift_id"
+              ],
+              "variable": [
+                {
+                  "key": "gift_id",
+                  "value": "11"
+                }
               ]
             },
             "description": "Delete a gift (Admin only)"
@@ -1144,25 +2299,207 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"is_animate\":false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "{{base_url}}/api/gifts/is_gift_animated/gift_id",
+              "raw": "{{base_url}}/api/admin_gift/is_gift_animated/:gift_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
-                "gifts",
+                "admin_gift",
                 "is_gift_animated",
-                "gift_id"
+                ":gift_id"
+              ],
+              "variable": [
+                {
+                  "key": "gift_id",
+                  "value": "11"
+                }
               ]
             },
             "description": "Update animated status of gift (Admin only)"
           },
-          "response": []
+          "response": [
+            {
+              "id": "3d575b9d-2b75-4ae8-9cc9-e1669e3787ef",
+              "name": "updated gift",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"is_animate\":false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/is_gift_animated/:gift_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "is_gift_animated",
+                    ":gift_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "gift_id",
+                      "value": "11"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "63"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3f-k4M8mUGHRxs4GGnxobFejN/5FBQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:10:32 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:15:50.989Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Gift details updated for gift id: 11\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Admin Get Gifts",
+          "id": "5d05c4c3-a464-4480-9e56-7bcbec0c6086",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin_gift/get_gifts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin_gift",
+                "get_gifts"
+              ]
+            },
+            "description": "Get all available gifts"
+          },
+          "response": [
+            {
+              "id": "fa5c00a3-701f-4355-96ea-15783f7c017c",
+              "name": "Gifts fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_gift/get_gifts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_gift",
+                    "get_gifts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "628"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"274-X41BJOAcLNiJqVyBYj6xenB10bA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:14:51 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:15:19.633Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Gifts fetched successfully\",\n    \"data\": [\n        {\n            \"giftId\": 11,\n            \"giftName\": \"star\",\n            \"giftIcon\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760540851_big_star_06_3x_h_Fwojl90.webp\",\n            \"coinCost\": 10,\n            \"isActive\": false,\n            \"isAnimated\": false\n        },\n        {\n            \"giftId\": 12,\n            \"giftName\": \"small_cup\",\n            \"giftIcon\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760730904_vip_cup_small_gold_GlAUFh6w1.png\",\n            \"coinCost\": 25,\n            \"isActive\": true,\n            \"isAnimated\": false\n        },\n        {\n            \"giftId\": 13,\n            \"giftName\": \"bronze_cup\",\n            \"giftIcon\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760762160_vip_cup_small_bronze_B6ntr73Qx.png\",\n            \"coinCost\": 20,\n            \"isActive\": true,\n            \"isAnimated\": false\n        }\n    ]\n}"
+            }
+          ]
         }
       ],
       "id": "gifts-folder"
@@ -1178,7 +2515,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
@@ -1195,7 +2532,69 @@
             },
             "description": "Get all active audio lives"
           },
-          "response": []
+          "response": [
+            {
+              "id": "6879b688-5cc6-408f-8855-46e7c673bfb7",
+              "name": "Audio Live Fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/live_stream/get_audio_lives",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "live_stream",
+                    "get_audio_lives"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "332"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14c-SXP+hdu/zDRDoh6MIWKIame+SI4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 19 Jan 2026 13:58:35 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-19T13:59:04.535Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Live Audio rooms fetched\",\n    \"data\": {\n        \"uid\": 3,\n        \"full_name\": \"Soulzaa Admin\",\n        \"channel_name\": \"FozLw_ash1\",\n        \"profile_picture\": \"https://ik.imagekit.io/jaul95sx2/profile_pictures/profile_3_1768762524967_photo-1557053910-d9eadeed1c58_DvX0hftxS.jpeg\",\n        \"country\": \"India\",\n        \"country_code\": \"IN\",\n        \"vip_level_id\": 0,\n        \"stream_id\": 3\n    }\n}"
+            }
+          ]
         },
         {
           "name": "Get Video Lives",
@@ -1205,7 +2604,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
@@ -1225,42 +2624,6 @@
           "response": []
         },
         {
-          "name": "Start Live",
-          "id": "live-3",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"liveType\": \"audio\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/live_stream/start",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "live_stream",
-                "start"
-              ]
-            },
-            "description": "Start a new live stream"
-          },
-          "response": []
-        },
-        {
           "name": "Go Live",
           "id": "live-4",
           "request": {
@@ -1268,7 +2631,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               },
               {
@@ -1279,7 +2642,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+              "raw": "{\n  \"is_audio\": false\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/live_stream/go_live",
@@ -1294,17 +2657,158 @@
             },
             "description": "Start broadcasting (change status to live)"
           },
-          "response": []
+          "response": [
+            {
+              "id": "6081d2f4-1436-4d89-a870-bb9b4af79191",
+              "name": "live_started",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": " {{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"is_audio\": false\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/live_stream/go_live",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "live_stream",
+                    "go_live"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "80"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"50-pQaWQACObHUhW/L3/jLP/dm42lw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 15:14:18 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T15:14:31.208Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Stream is live\",\n    \"data\": {\n        \"stream_id\": 1,\n        \"status\": \"live\"\n    }\n}"
+            },
+            {
+              "id": "960e38e6-07a5-4602-a561-47f582c942c2",
+              "name": "already user is live",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"is_audio\": false\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/live_stream/go_live",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "live_stream",
+                    "go_live"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "47"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2f-dUUY142yUgkcLzfMZJNj0nuS3K0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 15:21:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T15:21:32.868Z",
+              "body": "{\n    \"status\": 400,\n    \"message\": \"User is already live\"\n}"
+            }
+          ]
         },
         {
           "name": "Pause Live",
           "id": "live-5",
           "request": {
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               },
               {
@@ -1318,29 +2822,114 @@
               "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/api/live_stream/pause",
+              "raw": "{{base_url}}/api/live_stream/pause/:stream_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
                 "live_stream",
-                "pause"
+                "pause",
+                ":stream_id"
+              ],
+              "variable": [
+                {
+                  "key": "stream_id",
+                  "value": "1"
+                }
               ]
             },
             "description": "Pause an active live stream"
           },
-          "response": []
+          "response": [
+            {
+              "id": "2666bf6e-c355-4a77-b116-2e4a96e61b6e",
+              "name": "stream paused",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/live_stream/pause/:stream_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "live_stream",
+                    "pause",
+                    ":stream_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "stream_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "95"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"5f-abRI/emE+hqlBkYHIagxplL/PD4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 16:52:45 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T16:53:34.955Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Stream paused successfully\",\n    \"data\": {\n        \"stream_id\": \"1\",\n        \"is_paused\": true\n    }\n}"
+            }
+          ]
         },
         {
           "name": "Resume Live",
           "id": "live-6",
           "request": {
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               },
               {
@@ -1349,34 +2938,111 @@
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
-            },
             "url": {
-              "raw": "{{base_url}}/api/live_stream/resume",
+              "raw": "{{base_url}}/api/live_stream/resume/:stream_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
                 "live_stream",
-                "resume"
+                "resume",
+                ":stream_id"
+              ],
+              "variable": [
+                {
+                  "key": "stream_id",
+                  "value": "1"
+                }
               ]
             },
             "description": "Resume a paused live stream"
           },
-          "response": []
+          "response": [
+            {
+              "id": "5dfe756c-cfdd-4228-aa95-81ca3551f35b",
+              "name": "stream resume",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/live_stream/resume/:stream_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "live_stream",
+                    "resume",
+                    ":stream_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "stream_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "97"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"61-AqL9PHI37i+yl28mI1ZaKIjT0wM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 16:53:27 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T16:53:57.861Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Stream resumed successfully\",\n    \"data\": {\n        \"stream_id\": \"1\",\n        \"is_paused\": false\n    }\n}"
+            }
+          ]
         },
         {
           "name": "End Live",
           "id": "live-7",
           "request": {
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               },
               {
@@ -1390,17 +3056,190 @@
               "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/api/live_stream/end",
+              "raw": "{{base_url}}/api/live_stream/end/:stream_id",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "api",
                 "live_stream",
-                "end"
+                "end",
+                ":stream_id"
+              ],
+              "variable": [
+                {
+                  "key": "stream_id",
+                  "value": "2"
+                }
               ]
             },
             "description": "End an active live stream"
+          },
+          "response": [
+            {
+              "id": "4fc542bd-c2a9-486a-b9f3-6269c31fe59e",
+              "name": "stream end",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"liveId\": \"live_id_here\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/live_stream/end/:stream_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "live_stream",
+                    "end",
+                    ":stream_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "stream_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "92"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"5c-AZBTF24RyanORKQS+pHPXsz5dE4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 16:54:57 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T16:59:53.182Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Stream ended successfully\",\n    \"data\": {\n        \"stream_id\": \"1\",\n        \"status\": \"end\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get audio stream history",
+          "id": "662901dd-1cc0-4c5a-b30d-3f7b52fa5c2d",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "3dc36d97-be0c-4915-ab58-97ab7ad3deef"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/audio_history",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "audio_history"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get video stream history",
+          "id": "283ec747-67bb-4318-bed7-ce3e8f6bd823",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "9c45214f-c5f9-414b-86f1-82fefefd5521"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/video_history",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "video_history"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Live earnings",
+          "id": "28680f9d-57bb-47eb-8bdb-749c366641aa",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "ed6721df-633f-4d5c-acf1-0f7d9dc68096"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/live_stream/earnings/:stream_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "live_stream",
+                "earnings",
+                ":stream_id"
+              ],
+              "variable": [
+                {
+                  "key": "stream_id",
+                  "value": "1"
+                }
+              ]
+            }
           },
           "response": []
         }
@@ -1418,10 +3257,19 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{jwt_token}}",
+                "value": "{{jwt_token}}",
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"uid\":\"01\", //pass the user_id\r\n    \"channelName\":\"varun\", //pass the username \r\n    \"role\":\"publisher\" //since user's live send publisher\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/api/live_stream/get_stream_token",
               "host": [
@@ -1497,6 +3345,1362 @@
         }
       ],
       "id": "lang-folder"
+    },
+    {
+      "name": "User Follows",
+      "item": [
+        {
+          "name": "Follow User",
+          "id": "ec4443b5-5259-4d15-829b-de9d22dae333",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"follower_id\": \"3\",\n  \"following_id\": \"12\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/follow/follow",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "follow",
+                "follow"
+              ]
+            },
+            "description": "Follow a user"
+          },
+          "response": []
+        },
+        {
+          "name": "Unfollow User",
+          "id": "5be3e143-ddc7-4e2e-ae96-b1da5e91068b",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"follower_id\": \"3\",\n  \"following_id\": \"12\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/follow/unfollow",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "follow",
+                "unfollow"
+              ]
+            },
+            "description": "Unfollow a user"
+          },
+          "response": []
+        },
+        {
+          "name": "Check is Following",
+          "id": "943d76ac-19ab-49d4-b82e-0bc2e6c35b78",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/follow/isFollowing?follower_id=12&following_id=3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "follow",
+                "isFollowing"
+              ],
+              "query": [
+                {
+                  "key": "follower_id",
+                  "value": "12",
+                  "uuid": "b8c8406d-6cf4-43b2-ac68-825223867d6e"
+                },
+                {
+                  "key": "following_id",
+                  "value": "3",
+                  "uuid": "a267838e-2177-47f4-82a2-d84150884f5b"
+                }
+              ]
+            },
+            "description": "Check if user follows another user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Followers",
+          "id": "f72a59ea-8b9d-4c8e-b9f1-8e2c9d8f8a7b",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/follow/followers/:user_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "follow",
+                "followers",
+                ":user_id"
+              ],
+              "variable": [
+                {
+                  "key": "user_id",
+                  "value": "12"
+                }
+              ]
+            },
+            "description": "Get list of followers for a user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Following",
+          "id": "a1b2c3d4-e5f6-47a8-b9c0-d1e2f3a4b5c6",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/follow/following/:user_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "follow",
+                "following",
+                ":user_id"
+              ],
+              "variable": [
+                {
+                  "key": "user_id",
+                  "value": "3"
+                }
+              ]
+            },
+            "description": "Get list of users that a user is following"
+          },
+          "response": []
+        }
+      ],
+      "id": "b11de473-146e-408c-8b37-ba03c7896716"
+    },
+    {
+      "name": "User Gifts",
+      "item": [
+        {
+          "name": "Send Gift",
+          "id": "8b62e34e-82bc-4a06-8665-d604c63a8dfd",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "242f00e0-1972-495f-86e8-bceaa63cad2f"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"receiver_id\":12,\r\n    \"gift_id\":11,\r\n    \"quantity\":1,\r\n    \"context_type\":\"LIVE\",\r\n    \"context_id\":3\r\n}\r\n\r\n//receiver_id, gift_id, quantity, context_type, context_id",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/user_gift/send_gift",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "user_gift",
+                "send_gift"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "97234421-18c0-4565-9c2e-3a128ea6fe35",
+              "name": "Gift sent",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "242f00e0-1972-495f-86e8-bceaa63cad2f"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"receiver_id\":12,\r\n    \"gift_id\":11,\r\n    \"quantity\":1,\r\n    \"context_type\":\"LIVE\",\r\n    \"context_id\":3\r\n}\r\n\r\n//receiver_id, gift_id, quantity, context_type, context_id",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/user_gift/send_gift",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user_gift",
+                    "send_gift"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "298"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"12a-YjL1Dbzii0P0xYtoUJUXn7WfHTY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 20:13:13 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T20:14:44.213Z",
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Gift sent successfully\",\n    \"data\": {\n        \"user_gift_id\": 6,\n        \"sender_id\": 3,\n        \"receiver_id\": 12,\n        \"gift_name\": \"star\",\n        \"gift_icon_url\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760540851_big_star_06_3x_h_Fwojl90.webp\",\n        \"quantity\": 1,\n        \"total_coins\": 10,\n        \"context_type\": \"LIVE\",\n        \"context_id\": 3\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "User Get Gifts",
+          "id": "gifts-1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/user_gift/get_gifts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "user_gift",
+                "get_gifts"
+              ]
+            },
+            "description": "Get all available gifts"
+          },
+          "response": [
+            {
+              "id": "eb300953-9f95-48dd-88b9-1ff1b22cd2c9",
+              "name": "Gifts fetched",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/user_gift/get_gifts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "user_gift",
+                    "get_gifts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "445"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1bd-Y9cR2hdIDfdaLltKcL1FBiEirpQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 19:14:54 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T19:15:33.333Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Gifts fetched successfully\",\n    \"data\": [\n        {\n            \"giftId\": 12,\n            \"giftName\": \"small_cup\",\n            \"giftIcon\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760730904_vip_cup_small_gold_GlAUFh6w1.png\",\n            \"coinCost\": 25,\n            \"isActive\": true,\n            \"isAnimated\": false\n        },\n        {\n            \"giftId\": 13,\n            \"giftName\": \"bronze_cup\",\n            \"giftIcon\": \"https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760762160_vip_cup_small_bronze_B6ntr73Qx.png\",\n            \"coinCost\": 20,\n            \"isActive\": true,\n            \"isAnimated\": false\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ],
+      "id": "98490086-46be-4abc-9b33-28ba5d8b1093"
+    },
+    {
+      "name": "Admin Coins Manager",
+      "item": [
+        {
+          "name": "Add Coin Package",
+          "id": "71035caf-bad5-49ee-ba08-0bfe5b0769d1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "8c427dcc-f2ae-4267-a2b3-79ea7f8f7ea9"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "package_banner",
+                  "type": "file",
+                  "uuid": "25594ea1-3e59-4aea-957a-c1314ee7d1cc",
+                  "src": [
+                    "/D:/flutter-sdk/Downloads/tango/tango/assets/big star 04@3x.webp"
+                  ]
+                },
+                {
+                  "key": "coins",
+                  "value": "150",
+                  "type": "text",
+                  "uuid": "dd6a55c0-4b3f-4cce-913b-c95fea8093e3"
+                },
+                {
+                  "key": "price",
+                  "value": "90.99",
+                  "type": "text",
+                  "uuid": "6fa9b2ef-1b63-4b35-9868-e853b00fdbf3"
+                },
+                {
+                  "key": "currency",
+                  "value": "inr",
+                  "type": "text",
+                  "uuid": "01fb9ef6-6f47-4c37-a0cd-e6989296b252"
+                },
+                {
+                  "key": "add_on_desc",
+                  "value": "Best",
+                  "type": "text",
+                  "uuid": "406d66ff-08c0-4627-95e7-b5d1733672b0"
+                },
+                {
+                  "key": "bonus_coins",
+                  "value": "10",
+                  "type": "text",
+                  "uuid": "87eb6060-90ab-4f73-a882-c7f7455333f3"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin_coins/add_coin_packages",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin_coins",
+                "add_coin_packages"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "17b33c9d-f0e7-429b-b7a5-44ee9d7aa594",
+              "name": "Fetched Coin packages",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "8c427dcc-f2ae-4267-a2b3-79ea7f8f7ea9"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "package_banner",
+                      "type": "file",
+                      "uuid": "25594ea1-3e59-4aea-957a-c1314ee7d1cc",
+                      "src": [
+                        "/D:/flutter-sdk/Downloads/tango/tango/assets/big star 04@3x.webp"
+                      ]
+                    },
+                    {
+                      "key": "coins",
+                      "value": "150",
+                      "type": "text",
+                      "uuid": "dd6a55c0-4b3f-4cce-913b-c95fea8093e3"
+                    },
+                    {
+                      "key": "price",
+                      "value": "90.99",
+                      "type": "text",
+                      "uuid": "6fa9b2ef-1b63-4b35-9868-e853b00fdbf3"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "inr",
+                      "type": "text",
+                      "uuid": "01fb9ef6-6f47-4c37-a0cd-e6989296b252"
+                    },
+                    {
+                      "key": "add_on_desc",
+                      "value": "Best",
+                      "type": "text",
+                      "uuid": "406d66ff-08c0-4627-95e7-b5d1733672b0"
+                    },
+                    {
+                      "key": "bonus_coins",
+                      "value": "10",
+                      "type": "text",
+                      "uuid": "87eb6060-90ab-4f73-a882-c7f7455333f3"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/add_coin_packages",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "add_coin_packages"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "responseTime": "2026-01-18T23:08:19.888Z",
+              "body": "{\r\n    \"status\": 200,\r\n    \"message\": \"Package added successfully\",\r\n    \"data\": {\r\n        \"package_id\": 9,\r\n        \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776213983_big_star_04_3x_YmnM81FVeA.webp\",\r\n        \"coins\": 150,\r\n        \"price\": \"90.99\",\r\n        \"currency\": \"INR\",\r\n        \"add_on_desc\": \"Best\",\r\n        \"bonus_coins\": 10\r\n    }\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Coin Package",
+          "id": "451da5b3-03d9-4475-9f49-6677ae102454",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "be4d09cc-99c1-4be4-a328-30d0ea9294c4"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin_coins/get_coin_packages",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin_coins",
+                "get_coin_packages"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f4c22eda-35ad-4aa6-882b-d116851e2ccb",
+              "name": "Get Coin Packages",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "be4d09cc-99c1-4be4-a328-30d0ea9294c4"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/get_coin_packages",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "get_coin_packages"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "556"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"22c-X/MUaiQxIoaZby0QGFCundgXGR0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 22:23:49 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T22:44:57.705Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Coin packages fetched successfully\",\n    \"data\": [\n        {\n            \"package_id\": 1,\n            \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768774520975_vip_cup_big_gold_uTLjw3n0z.png\",\n            \"coins\": 199,\n            \"price\": \"200.00\",\n            \"currency\": \"INR\",\n            \"add_on_desc\": \"Add on desc\",\n            \"bonus_coins\": 10,\n            \"is_active\": 1,\n            \"created_at\": \"2026-01-16 14:44:15\",\n            \"updated_at\": \"2026-01-19 03:53:32\"\n        },\n        {\n            \"package_id\": 2,\n            \"banner\": null,\n            \"coins\": 250,\n            \"price\": \"99.00\",\n            \"currency\": \"INR\",\n            \"add_on_desc\": null,\n            \"bonus_coins\": 0,\n            \"is_active\": 1,\n            \"created_at\": \"2026-01-16 14:44:29\",\n            \"updated_at\": null\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Coin Package",
+          "id": "428a6679-d064-47ac-a919-7932d81de70e",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "2dedccd8-1e95-4e2b-a6f5-07d8037f0463"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "package_banner",
+                  "type": "file",
+                  "uuid": "20f5de52-eb65-463e-b3a8-6556d531d8d2",
+                  "src": [
+                    "/D:/flutter-sdk/Downloads/tango/tango/assets/images/vip_cup_big_gold.png"
+                  ],
+                  "disabled": true
+                },
+                {
+                  "key": "coins",
+                  "value": "199",
+                  "type": "text",
+                  "uuid": "c519f6e4-3c17-4d1f-abd3-ee87b5450efd",
+                  "disabled": true
+                },
+                {
+                  "key": "price",
+                  "value": "190.55",
+                  "type": "text",
+                  "uuid": "0ad90613-1051-4aa3-bf48-398bb06fdbe7",
+                  "disabled": true
+                },
+                {
+                  "key": "currency",
+                  "value": "INR",
+                  "type": "text",
+                  "uuid": "c546b303-f5a1-43e6-a391-e14a69658622",
+                  "disabled": true
+                },
+                {
+                  "key": "add_on_desc",
+                  "value": "Add on desc",
+                  "type": "text",
+                  "uuid": "50a1b61a-10f8-421a-b254-5c0bbc985909",
+                  "disabled": true
+                },
+                {
+                  "key": "bonus_coins",
+                  "value": "10",
+                  "type": "text",
+                  "uuid": "b10c2722-1769-4b99-b38d-d10de9ad2639",
+                  "disabled": true
+                },
+                {
+                  "key": "is_active",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "e6af02ee-36df-42d7-85d3-b1bb1be3df5b",
+                  "disabled": true
+                },
+                {
+                  "key": "package_id",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "ad3cbce2-c822-413c-a904-fd1cd75f8b6a",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin_coins/update_coin_package",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin_coins",
+                "update_coin_package"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c42032b0-8822-4379-a007-40834c312600",
+              "name": "Updated Coin Package",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "2dedccd8-1e95-4e2b-a6f5-07d8037f0463"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "package_banner",
+                      "type": "file",
+                      "uuid": "20f5de52-eb65-463e-b3a8-6556d531d8d2",
+                      "src": [
+                        "/D:/flutter-sdk/Downloads/tango/tango/assets/images/vip_cup_big_gold.png"
+                      ],
+                      "disabled": true
+                    },
+                    {
+                      "key": "coins",
+                      "value": "199",
+                      "type": "text",
+                      "uuid": "c519f6e4-3c17-4d1f-abd3-ee87b5450efd"
+                    },
+                    {
+                      "key": "price",
+                      "value": "190.55",
+                      "type": "text",
+                      "uuid": "0ad90613-1051-4aa3-bf48-398bb06fdbe7"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "INR",
+                      "type": "text",
+                      "uuid": "c546b303-f5a1-43e6-a391-e14a69658622",
+                      "disabled": true
+                    },
+                    {
+                      "key": "add_on_desc",
+                      "value": "Add on desc",
+                      "type": "text",
+                      "uuid": "50a1b61a-10f8-421a-b254-5c0bbc985909"
+                    },
+                    {
+                      "key": "bonus_coins",
+                      "value": "10",
+                      "type": "text",
+                      "uuid": "b10c2722-1769-4b99-b38d-d10de9ad2639"
+                    },
+                    {
+                      "key": "is_active",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "e6af02ee-36df-42d7-85d3-b1bb1be3df5b"
+                    },
+                    {
+                      "key": "package_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "ad3cbce2-c822-413c-a904-fd1cd75f8b6a"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/update_coin_packages",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "update_coin_packages"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "306"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"132-rGBaZexfMGMAVfQ73hY0y9NIxv4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 22:25:23 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T22:45:10.067Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Coin package updated successfully\",\n    \"data\": {\n        \"package_id\": 1,\n        \"coins\": 199,\n        \"price\": 190.55,\n        \"currency\": \"INR\",\n        \"banner\": \"https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768774520975_vip_cup_big_gold_uTLjw3n0z.png\",\n        \"add_on_desc\": \"Add on desc\",\n        \"bonus_coins\": 10,\n        \"is_active\": true\n    }\n}"
+            },
+            {
+              "id": "61fbca68-438d-4db2-b572-3e933a29a0da",
+              "name": "Request body missing",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "2dedccd8-1e95-4e2b-a6f5-07d8037f0463"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "package_banner",
+                      "type": "file",
+                      "uuid": "20f5de52-eb65-463e-b3a8-6556d531d8d2",
+                      "src": [
+                        "/D:/flutter-sdk/Downloads/tango/tango/assets/images/vip_cup_big_gold.png"
+                      ],
+                      "disabled": true
+                    },
+                    {
+                      "key": "coins",
+                      "value": "199",
+                      "type": "text",
+                      "uuid": "c519f6e4-3c17-4d1f-abd3-ee87b5450efd",
+                      "disabled": true
+                    },
+                    {
+                      "key": "price",
+                      "value": "190.55",
+                      "type": "text",
+                      "uuid": "0ad90613-1051-4aa3-bf48-398bb06fdbe7",
+                      "disabled": true
+                    },
+                    {
+                      "key": "currency",
+                      "value": "INR",
+                      "type": "text",
+                      "uuid": "c546b303-f5a1-43e6-a391-e14a69658622",
+                      "disabled": true
+                    },
+                    {
+                      "key": "add_on_desc",
+                      "value": "Add on desc",
+                      "type": "text",
+                      "uuid": "50a1b61a-10f8-421a-b254-5c0bbc985909",
+                      "disabled": true
+                    },
+                    {
+                      "key": "bonus_coins",
+                      "value": "10",
+                      "type": "text",
+                      "uuid": "b10c2722-1769-4b99-b38d-d10de9ad2639",
+                      "disabled": true
+                    },
+                    {
+                      "key": "is_active",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "e6af02ee-36df-42d7-85d3-b1bb1be3df5b",
+                      "disabled": true
+                    },
+                    {
+                      "key": "package_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "ad3cbce2-c822-413c-a904-fd1cd75f8b6a",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/update_coin_package",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "update_coin_package"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "51"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"33-nxElf3EldCHcuPqa0UZtItJsYA0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 23:07:06 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T23:07:09.809Z",
+              "body": "{\n    \"status\": 400,\n    \"message\": \"Request body is required\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Enable Coin Package",
+          "id": "b3dda7a4-57ee-4a45-a5a4-cafee82b55cc",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "fbc5ea2d-ffb7-4440-a093-5169045d6908"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin_coins/enable_coin_package/:package_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin_coins",
+                "enable_coin_package",
+                ":package_id"
+              ],
+              "variable": [
+                {
+                  "key": "package_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e4543cd8-b7b1-4422-8124-e07e3b712382",
+              "name": "Package Enabled",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "fbc5ea2d-ffb7-4440-a093-5169045d6908"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/enable_coin_package/:package_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "enable_coin_package",
+                    ":package_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "package_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "55"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"37-0GOacc2nRz1GVv//2BI/B3WDu/Q\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 22:56:09 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T22:56:11.937Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Package is enabled for id: 1\"\n}"
+            },
+            {
+              "id": "d5d35f18-6d9a-44fd-be4d-b10be3567d47",
+              "name": "Already Enabled",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "fbc5ea2d-ffb7-4440-a093-5169045d6908"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/enable_coin_package/:package_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "enable_coin_package",
+                    ":package_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "package_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "53"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"35-DI6BnWv0GBY5diN8a0I0qSMDS0E\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 22:56:51 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T22:56:54.413Z",
+              "body": "{\n    \"status\": 409,\n    \"message\": \"Package is already enabled\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Disable Coin Package",
+          "id": "f50aab99-4980-4576-a97a-b79e231e1a69",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt_token}}",
+                "type": "text",
+                "uuid": "4aa1b8ba-61b9-4adb-9f1a-027323c8716a"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin_coins/disable_coin_package/:package_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin_coins",
+                "disable_coin_package",
+                ":package_id"
+              ],
+              "variable": [
+                {
+                  "key": "package_id",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee4aaba0-b8e7-4c50-bfa4-6094a7cf9df3",
+              "name": "Already Disabled",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "4aa1b8ba-61b9-4adb-9f1a-027323c8716a"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/disable_coin_package/:package_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "disable_coin_package",
+                    ":package_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "package_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "54"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"36-54dorZfGW2i59zqk/IyVm+l6xgc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 22:55:13 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T22:55:22.480Z",
+              "body": "{\n    \"status\": 409,\n    \"message\": \"Package is already disabled\"\n}"
+            },
+            {
+              "id": "13613dbb-f973-4b4b-91cb-40c93a13d61b",
+              "name": "Package Disabled",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{jwt_token}}",
+                    "type": "text",
+                    "uuid": "4aa1b8ba-61b9-4adb-9f1a-027323c8716a"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/admin_coins/disable_coin_package/:package_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin_coins",
+                    "disable_coin_package",
+                    ":package_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "package_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "56"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"38-vKkhdCrOfGfYOG7vBTUNXWL6zbk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 18 Jan 2026 22:56:27 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-18T22:56:30.275Z",
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Package is disabled for id: 1\"\n}"
+            }
+          ]
+        }
+      ],
+      "id": "a5b21450-16dc-4e8a-ba7f-a53d727d9124"
+    }
+  ],
+  "variable": [
+    {
+      "id": "e21438a1-65db-467c-a450-72be70d5cb34",
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "id": "f3880e81-b58c-4192-927f-f94da8a817e4",
+      "key": "id_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "46929b6a-dc05-429c-8242-010ffc1bab49",
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "3d15f966-55e6-4467-bac6-c6cc642952d3",
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "42a597d7-9f2b-45fa-8141-d5cecb3b9233",
+      "key": "chatId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "96093d59-9776-418f-b740-6ed78ed58ed3",
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "b5ddef95-b98b-4600-930b-c741abcfaa81",
+      "key": "fileId",
+      "value": "",
+      "type": "string"
     }
   ]
 }

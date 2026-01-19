@@ -5,13 +5,16 @@ import user_router from './routes/user_profile_route.js';
 import location_router from './routes/location_route.js';
 import language_router from "./routes/languages_route.js";
 import agora_token_route from './routes/stream_token_route.js';
-import coins_route from "./routes/coins_route.js";
-import gift_routes from './routes/gifts_route.js';
+import user_coins_route from "./routes/user_coins_route.js";
+import admin_coins_route from "./routes/admin_coin_route.js";
+import admin_gift_routes from './routes/admin_gifts_route.js';
 import image_route from './utils/image_kit_config.js';
 import get_live_users_route from './routes/live_routes.js';
 import get_all_users_route from './routes/all_users_route.js';
 import chat_router from './routes/chat_route.js';
 import media_router from './routes/media_route.js';
+import follow_routes from './routes/follow_route.js';
+import user_gift_routes from "./routes/user_gift_routes.js";
 import { swaggerDocs } from "./swagger/swagger.js";
 
 const app = express();
@@ -43,10 +46,12 @@ app.use('/api/live_stream', get_live_users_route);
 app.use('/api/users', get_all_users_route);
 
 // coins routes
-app.use('/api/coins', coins_route);
+app.use('/api/user_coins', user_coins_route);
+app.use('/api/admin_coins', admin_coins_route);
 
 //gifts 
-app.use('/api/gifts', gift_routes);
+app.use('/api/admin_gift', admin_gift_routes);
+app.use('/api/user_gift', user_gift_routes);
 
 //image uploading
 app.use('/api/images', image_route);
@@ -56,6 +61,9 @@ app.use('/api/chats', chat_router);
 
 // media routes
 app.use('/api/media', media_router);
+
+app.use('/api/follow', follow_routes);
+
 
 app.use((req, res) => res.status(404).send("Route not found"));
 

@@ -179,3 +179,41 @@ export const get_coins_transactions = async (req, res) => {
         });
     }
 };
+
+
+export const get_coin_packages = async (req, res) => {
+    try {
+        const [rows] = await mysql_db.query(
+            `select * from coin_packages where is_active =1`
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                status: 404,
+                message: 'No coin packages found'
+            });
+        }
+
+        const data = rows.map(value => ({
+            package_id: value.package_id,
+            banner: value.banner,
+            coins: parseFloat(value.coins),
+            price: parseFloat(value.price),
+            currency: value.currency,
+            add_on_desc: value.add_on_desc,
+            bonus_coins: value.bonus_coins
+        }));
+
+        return res.status(200).json({
+            status: 200,
+            message: "Coin packages fetched",
+            data: data
+        });
+
+    } catch (e) {
+        return res.status(500).json({
+            status: 500,
+            message: `Internal Server Error ${e.message}`
+        });
+    }
+};

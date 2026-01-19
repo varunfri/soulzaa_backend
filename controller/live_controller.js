@@ -1,88 +1,15 @@
 import { mysql_db } from "../db_config/mysql_connect.js";
 import { getIO } from "../utils/init_socket.js";
-import crypto from "crypto";
 
-export const start_live = async (req, res) => {
-    const user_id = req.user.id;
-    const { is_audio } = req.body || {};
-
-    if (is_audio === undefined || typeof is_audio !== 'boolean') {
-        return res.status(400).json({
-            status: 400,
-            message: "is_audio field is required and must be boolean"
-        });
-    }
-
-    const connection = await mysql_db.getConnection();
-
-    try {
-        await connection.beginTransaction();
-
-        // Check if user already has an active stream
-        const [activeStream] = await connection.query(
-            `SELECT stream_id FROM user_streams WHERE user_id = ? AND status IN ('created', 'live')`,
-            [user_id]
-        );
-
-        if (activeStream.length > 0) {
-            return res.status(400).json({
-                status: 400,
-                message: "User already has an active stream"
-            });
-        }
-
-        // Generate unique stream key
-        const stream_key = crypto.randomBytes(16).toString('hex');
-        const stream_url = `rtmp://your-streaming-server/${stream_key}`;
-
-        // Create stream record
-        const [result] = await connection.query(
-            `INSERT INTO user_streams (user_id, stream_key, stream_url, status, is_audio, is_live)
-             VALUES (?, ?, ?, 'created', ?, 0)`,
-            [user_id, stream_key, stream_url, is_audio ? 1 : 0]
-        );
-
-        if (result.affectedRows !== 1) {
-            throw new Error("Failed to create stream");
-        }
-
-        const stream_id = result.insertId;
-
-        await connection.commit();
-
-        const data = {
-            stream_id,
-            stream_key,
-            stream_url,
-            is_audio
-        };
-
-        res.status(201).json({
-            status: 201,
-            message: "Live stream created successfully",
-            data: data
-        });
-
-    } catch (e) {
-        await connection.rollback();
-        console.log("Error starting live:", e);
-        res.status(500).json({
-            status: 500,
-            message: "Internal server error: Unable to start live"
-        });
-    } finally {
-        connection.release();
-    }
-};
 
 export const go_live = async (req, res) => {
     const user_id = req.user.id;
-    const { stream_id, stream_title, stream_description } = req.body || {};
+    const { is_audio } = req.body;
 
-    if (!stream_id) {
+    if (typeof is_audio !== 'boolean') {
         return res.status(400).json({
             status: 400,
-            message: "stream_id is required"
+            message: "is_audio must be boolean"
         });
     }
 
@@ -91,66 +18,88 @@ export const go_live = async (req, res) => {
     try {
         await connection.beginTransaction();
 
-        // Verify stream belongs to user and is in created status
-        const [stream] = await connection.query(
-            `SELECT stream_id, is_audio FROM user_streams WHERE stream_id = ? AND user_id = ? AND status = 'created'`,
-            [stream_id, user_id]
+        const [existing] = await connection.query(
+            `SELECT stream_id, status 
+         FROM user_streams 
+         WHERE user_id = ?
+         AND status IN ('created', 'paused', 'live')
+         LIMIT 1`,
+            [user_id]
         );
 
-        if (stream.length === 0) {
-            return res.status(404).json({
-                status: 404,
-                message: "Stream not found or already live"
-            });
+        let stream_id;
+
+        if (existing.length === 0) {
+            const [insert] = await connection.query(
+                `INSERT INTO user_streams
+             (user_id, is_audio, status, started_at)
+             VALUES (?, ?, 'live', NOW())`,
+                [user_id, is_audio ? 1 : 0]
+            );
+
+            stream_id = insert.insertId;
         }
+        else {
+            const { stream_id: existingStreamId, status } = existing[0];
 
-        // Update stream to live
-        const [updateResult] = await connection.query(
-            `UPDATE user_streams 
-             SET status = 'live', is_live = 1, started_at = NOW() 
+
+            if (status === 'live') {
+                await connection.rollback();
+
+                return res.status(400).json({
+                    status: 400,
+                    message: "User is already live"
+                });
+            }
+
+            // Paused or created → resume / go live
+            stream_id = existingStreamId;
+
+            await connection.query(
+                `UPDATE user_streams
+             SET status = 'live'
              WHERE stream_id = ?`,
-            [stream_id]
-        );
-
-        if (updateResult.affectedRows !== 1) {
-            throw new Error("Failed to go live");
+                [stream_id]
+            );
         }
 
         await connection.commit();
 
-        // Emit socket event
+        // Notify clients
         const io = getIO();
         io.emit('stream_went_live', {
             stream_id,
             user_id,
-            is_audio: stream[0].is_audio,
+            is_audio,
             timestamp: new Date()
         });
 
         res.status(200).json({
             status: 200,
-            message: "Stream is now live",
+            message: "Stream is live",
             data: {
                 stream_id,
-                status: 'live'
+                status: "live"
             }
         });
 
-    } catch (e) {
+    } catch (err) {
         await connection.rollback();
-        console.log("Error going live:", e);
+        console.error("go_live error:", err);
+
         res.status(500).json({
             status: 500,
-            message: "Internal server error: Unable to go live"
+            message: "Unable to go live"
         });
     } finally {
         connection.release();
     }
 };
 
+
 export const pause_live = async (req, res) => {
     const user_id = req.user.id;
-    const { stream_id } = req.body || {};
+    const { stream_id } = req.params;
 
     if (!stream_id) {
         return res.status(400).json({
@@ -222,7 +171,7 @@ export const pause_live = async (req, res) => {
 
 export const resume_live = async (req, res) => {
     const user_id = req.user.id;
-    const { stream_id } = req.body || {};
+    const { stream_id } = req.params;
 
     if (!stream_id) {
         return res.status(400).json({
@@ -294,7 +243,7 @@ export const resume_live = async (req, res) => {
 
 export const end_live = async (req, res) => {
     const user_id = req.user.id;
-    const { stream_id } = req.body || {};
+    const { stream_id } = req.params;
 
     if (!stream_id) {
         return res.status(400).json({
@@ -324,7 +273,7 @@ export const end_live = async (req, res) => {
         // Update stream to ended
         const [updateResult] = await connection.query(
             `UPDATE user_streams 
-             SET status = 'end', is_live = 0, is_paused = 0, ended_at = NOW() 
+             SET status = 'end', is_paused = 0, ended_at = NOW() 
              WHERE stream_id = ?`,
             [stream_id]
         );
@@ -376,7 +325,7 @@ export const get_video_lives = async (req, res) => {
     ul.country_code,
     COALESCE(uvl.vip_level_id, 0) AS vip_level_id,
     us.stream_id,
-    us.stream_url,
+     
     us.started_at
     FROM user_streams us
     INNER JOIN users u
@@ -408,10 +357,22 @@ export const get_video_lives = async (req, res) => {
             });
         }
 
+
+        const data = result.map(value => ({
+            uid: value.user_id,
+            full_name: value.full_name,
+            channel_name: value.username,
+            profile_picture: value.profile_picture,
+            country: value.country,
+            country_code: value.country_code,
+            vip_level_id: value.vip_level_id,
+            stream_id: value.stream_id,
+        }));
+
         return res.status(200).json({
             status: 200,
             message: "Live video rooms found",
-            data: result,
+            data: data, //this will be accessd by all users
         })
     } catch (e) {
         console.log("Error while executing get_live_users: ", e);
@@ -434,7 +395,6 @@ export const get_audio_lives = async (req, res) => {
     ul.country_code,
     COALESCE(uvl.vip_level_id, 0) AS vip_level_id,
     us.stream_id,
-    us.stream_url,
     us.started_at
     FROM user_streams us
     INNER JOIN users u
@@ -466,10 +426,22 @@ export const get_audio_lives = async (req, res) => {
             });
         }
 
+
+        const data = result.map(value => ({
+            uid: value.user_id,
+            full_name: value.full_name,
+            channel_name: value.username,
+            profile_picture: value.profile_picture,
+            country: value.country,
+            country_code: value.country_code,
+            vip_level_id: value.vip_level_id,
+            stream_id: value.stream_id,
+        }));
+
         return res.status(200).json({
             status: 200,
             message: "Live Audio rooms fetched",
-            data: result
+            data: data // this will be accessed by all users
         });
     } catch (e) {
         console.log("Error while executing get_live_users: ", e);
@@ -480,3 +452,204 @@ export const get_audio_lives = async (req, res) => {
     }
 };
 
+export const get_video_stream_history = async (req, res) => {
+    try {
+        const user_id = req.user.id;
+
+        if (!user_id) {
+            return res.status(400).json({
+                status: 400,
+                message: "user_id is required"
+            });
+        }
+
+        const [result] = await mysql_db.query(
+            `SELECT 
+                us.stream_id,
+                us.started_at,
+                us.ended_at,
+                TIMESTAMPDIFF(MINUTE, us.started_at, us.ended_at) as duration_minutes,
+                us.is_audio,
+                u.full_name,
+                u.profile_picture,
+                COALESCE(SUM(ug.total_coins), 0) as total_coins_earned,
+                COALESCE(SUM(ug.quantity), 0) as total_gifts_count,
+                COUNT(DISTINCT ug.sender_id) as unique_senders
+             FROM user_streams us
+             INNER JOIN users u ON u.user_id = us.user_id
+             LEFT JOIN user_gifts ug ON ug.context_id = us.stream_id 
+                AND ug.context_type = 'LIVE' 
+                AND ug.receiver_id = us.user_id
+             WHERE us.user_id = ? AND us.is_audio = 0 AND us.status = 'end'
+             GROUP BY us.stream_id,  us.started_at, us.ended_at, us.is_audio, u.full_name, u.profile_picture
+             ORDER BY us.started_at DESC`,
+            [user_id]
+        );
+
+        if (result.length === 0) {
+            return res.status(404).json({
+                status: 404,
+                message: "No video stream history found"
+            });
+        }
+
+        return res.status(200).json({
+            status: 200,
+            message: "Video stream history retrieved successfully",
+            count: result.length,
+            data: result
+        });
+
+    } catch (e) {
+        console.log("Error while fetching video stream history: ", e);
+        return res.status(500).json({
+            status: 500,
+            message: "Internal server error"
+        });
+    }
+};
+
+export const get_audio_stream_history = async (req, res) => {
+    try {
+        const user_id = req.user.id;
+
+        if (!user_id) {
+            return res.status(400).json({
+                status: 400,
+                message: "user_id is required"
+            });
+        }
+
+        const [result] = await mysql_db.query(
+            `SELECT 
+                us.stream_id,
+                us.started_at,
+                us.ended_at,
+                TIMESTAMPDIFF(MINUTE, us.started_at, us.ended_at) as duration_minutes,
+                us.is_audio,
+                u.full_name,
+                u.profile_picture,
+                COALESCE(SUM(ug.total_coins), 0) as total_coins_earned,
+                COALESCE(SUM(ug.quantity), 0) as total_gifts_count,
+                COUNT(DISTINCT ug.sender_id) as unique_senders
+             FROM user_streams us
+             INNER JOIN users u ON u.user_id = us.user_id
+             LEFT JOIN user_gifts ug ON ug.context_id = us.stream_id 
+                AND ug.context_type = 'LIVE' 
+                AND ug.receiver_id = us.user_id
+             WHERE us.user_id = ? AND us.is_audio = 1 AND us.status = 'end'
+             GROUP BY us.stream_id,   us.started_at, us.ended_at, us.is_audio, u.full_name, u.profile_picture
+             ORDER BY us.started_at DESC`,
+            [user_id]
+        );
+
+        if (result.length === 0) {
+            return res.status(404).json({
+                status: 404,
+                message: "No audio stream history found"
+            });
+        }
+
+        return res.status(200).json({
+            status: 200,
+            message: "Audio stream history retrieved successfully",
+            count: result.length,
+            data: result
+        });
+
+    } catch (e) {
+        console.log("Error while fetching audio stream history: ", e);
+        return res.status(500).json({
+            status: 500,
+            message: "Internal server error"
+        });
+    }
+};
+
+export const get_live_earnings = async (req, res) => {
+    try {
+        const { stream_id } = req.params;
+        const user_id = req.user.id;
+
+        if (!stream_id) {
+            return res.status(400).json({
+                status: 400,
+                message: "stream_id is required"
+            });
+        }
+
+        // Verify stream belongs to user
+        const [streamVerify] = await mysql_db.query(
+            `SELECT us.stream_id, us.is_audio, us.started_at, us.ended_at, us.status
+             FROM user_streams us
+             WHERE us.stream_id = ? AND us.user_id = ?`,
+            [stream_id, user_id]
+        );
+
+        if (streamVerify.length === 0) {
+            return res.status(404).json({
+                status: 404,
+                message: "Stream not found or does not belong to user"
+            });
+        }
+
+        const stream = streamVerify[0];
+
+        // Get all gifts received during this live stream
+        const [gifts] = await mysql_db.query(
+            `SELECT 
+                ug.user_gift_id,
+                ug.sender_id,
+                u.user_id,
+                u.full_name as sender_name,
+                u.profile_picture,
+                COALESCE(un.username, '') as username,
+                COALESCE(uvl.vip_level_id, 0) as vip_level_id,
+                g.gift_name,
+                g.gift_icon_url,
+                ug.quantity,
+                ug.total_coins,
+                ug.created_at
+             FROM user_gifts ug
+             INNER JOIN users u ON u.user_id = ug.sender_id
+             LEFT JOIN usernames un ON un.user_id = u.user_id AND un.is_active = 1
+             LEFT JOIN user_vip_levels uvl ON uvl.user_id = u.user_id AND uvl.is_active = 1
+             INNER JOIN gifts g ON g.gift_id = ug.gift_id
+             WHERE ug.context_type = 'LIVE' 
+             AND ug.context_id = ? 
+             AND ug.receiver_id = ?
+             ORDER BY ug.created_at DESC`,
+            [stream_id, user_id]
+        );
+
+        // Calculate totals
+        const totalCoins = gifts.reduce((sum, gift) => sum + gift.total_coins, 0);
+        const totalGifts = gifts.reduce((sum, gift) => sum + gift.quantity, 0);
+        const uniqueSenders = new Set(gifts.map(g => g.sender_id)).size;
+
+        return res.status(200).json({
+            status: 200,
+            message: "Live stream earnings retrieved successfully",
+            data: {
+                stream_id,
+                stream_type: stream.is_audio ? 'audio' : 'video',
+                status: stream.status,
+                started_at: stream.started_at,
+                ended_at: stream.ended_at,
+                earnings: {
+                    total_coins: totalCoins,
+                    total_gifts: totalGifts,
+                    unique_senders: uniqueSenders
+                },
+                gifts: gifts
+            }
+        });
+
+    } catch (e) {
+        console.log("Error while fetching live earnings: ", e);
+        return res.status(500).json({
+            status: 500,
+            message: "Internal server error"
+        });
+    }
+};

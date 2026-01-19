@@ -75,27 +75,30 @@ export const authFirebase = async (req, res, next) => {
 
 };
 
-// verify token
+
 export const verifySocketToken = (socket, next) => {
     try {
-        let authorization =
+        let token =
             socket.handshake.auth?.authorization ||
             socket.handshake.headers?.authorization;
 
-        if (!authorization) {
-            return next(new Error("Unauthorized: token is required"));
+        if (!token) {
+            return next(new Error("NO_TOKEN"));
         }
 
-        if (authorization.startsWith("Bearer ")) {
-            authorization = authorization.split(" ")[1];
+        if (token.startsWith("Bearer ")) {
+            token = token.slice(7);
         }
 
-        const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        socket.user = decoded; // attach user to socket
-        next();
+        socket.user = decoded;
+        return next();
     } catch (err) {
-        console.error("Socket verify error:", err.message);
-        next(new Error("Unauthorized"));
+        if (err.name === "TokenExpiredError") {
+            return next(new Error("TOKEN_EXPIRED"));
+        }
+
+        return next(new Error("UNAUTHORIZED"));
     }
 };

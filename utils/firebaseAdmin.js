@@ -17,13 +17,7 @@ if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
-  console.log(
-    serviceAccount.private_key.startsWith("-----BEGIN PRIVATE KEY-----\n")
-  );
-  console.log("VERIFY FAILED FOR PROJECT:", admin.app().options.projectId);
 
-  console.log("SERVICE ACCOUNT PROJECT:", serviceAccount.project_id);
-  console.log("SERVICE ACCOUNT CLIENT:", serviceAccount.client_email);
 }
 
 export default admin;

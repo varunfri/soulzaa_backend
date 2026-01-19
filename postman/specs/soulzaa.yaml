@@ -18,6 +18,23 @@ paths:
       responses:
         "200":
           description: User exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "User exists"
+                data:
+                  user_id: "123"
+                  email: "user@example.com"
         "401":
           description: Unauthorized - Invalid or missing token
         "404":
@@ -38,6 +55,24 @@ paths:
       responses:
         "201":
           description: User successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 201
+                message: "User successfully registered"
+                data:
+                  user_id: "123"
+                  email: "user@example.com"
+                  fullname: "Soulzaa"
         "400":
           description: Bad request - Invalid input data
         "401":
@@ -110,6 +145,24 @@ paths:
       responses:
         "200":
           description: User successfully signed in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "User successfully signed in"
+                data:
+                  user_id: "123"
+                  email: "user@example.com"
+                  jwt_token: "token_here"
         "400":
           description: Bad request - Missing credentials
         "401":
@@ -137,18 +190,30 @@ paths:
       responses:
         "200":
           description: Location data retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "Location data retrieved successfully"
+                data:
+                  country: "India"
+                  state: "Karnataka"
+                  city: "Bengaluru"
         "401":
           description: Unauthorized
         "500":
           description: Internal server error
       tags:
         - sign_in_&_up
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example: {}
   /api/auth/refresh_token:
     get:
       summary: refresh_token
@@ -166,6 +231,23 @@ paths:
       responses:
         "200":
           description: Tokens refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "Tokens refreshed successfully"
+                data:
+                  jwt_token: "new_token_here"
+                  refresh_token: "new_refresh_token_here"
         "401":
           description: Unauthorized - Invalid or expired refresh token
         "500":
@@ -184,6 +266,26 @@ paths:
       responses:
         "200":
           description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "User profile retrieved successfully"
+                data:
+                  user_id: "123"
+                  fullname: "John Doe"
+                  email: "john@example.com"
+                  country: "India"
+                  state: "Karnataka"
         "401":
           description: Unauthorized - Invalid or missing auth token
         "404":
@@ -204,6 +306,24 @@ paths:
       responses:
         "200":
           description: Stream token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "Stream token generated successfully"
+                data:
+                  token: "agora_token_here"
+                  channel: "varun"
+                  uid: 1
         "400":
           description: Bad request - Invalid parameters
         "401":
@@ -240,6 +360,23 @@ paths:
       responses:
         "200":
           description: Coin balance retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "Coin balance retrieved successfully"
+                data:
+                  user_id: "123"
+                  balance: 5000
         "401":
           description: Unauthorized
         "404":
@@ -260,6 +397,25 @@ paths:
       responses:
         "200":
           description: Coin transactions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: array
+              example:
+                status: 200
+                message: "Coin transactions retrieved successfully"
+                data:
+                  - transaction_id: "txn_1"
+                    type: "purchase"
+                    amount: 1000
+                    date: "2024-01-15"
         "401":
           description: Unauthorized
         "500":
@@ -278,6 +434,25 @@ paths:
       responses:
         "200":
           description: Purchase history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: array
+              example:
+                status: 200
+                message: "Purchase history retrieved successfully"
+                data:
+                  - purchase_id: "purch_1"
+                    amount: 99.99
+                    coins: 1000
+                    date: "2024-01-15"
         "401":
           description: Unauthorized
         "500":
@@ -296,6 +471,24 @@ paths:
       responses:
         "201":
           description: Coins purchased successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 201
+                message: "Coins purchased successfully"
+                data:
+                  transaction_id: "txn_123"
+                  coins_added: 1000
+                  balance: 5000
         "400":
           description: Bad request - Invalid purchase data
         "401":
@@ -304,6 +497,19 @@ paths:
           description: Internal server error
       tags:
         - coins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                coins:
+                  type: integer
+            example:
+              amount: 100
+              coins: 1000
   /api/gifts/add_gift:
     post:
       summary: add_gift
@@ -321,6 +527,24 @@ paths:
       responses:
         "201":
           description: Gift added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 201
+                message: "Gift added successfully"
+                data:
+                  gift_id: "1"
+                  gift_name: "single_add"
+                  coin_cost: 150
         "400":
           description: Bad request - Invalid gift data
         "401":
@@ -357,6 +581,27 @@ paths:
       responses:
         "201":
           description: Gifts added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: array
+              example:
+                status: 201
+                message: "Gifts added successfully"
+                data:
+                  - gift_id: "1"
+                    gift_name: "check_1"
+                    coin_cost: 14
+                  - gift_id: "2"
+                    gift_name: "check_2"
+                    coin_cost: 5
         "400":
           description: Bad request - Invalid gift data
         "401":
@@ -402,6 +647,29 @@ paths:
       responses:
         "200":
           description: Gifts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: array
+              example:
+                status: 200
+                message: "Gifts retrieved successfully"
+                data:
+                  - gift_id: "1"
+                    gift_name: "Rose"
+                    coin_cost: 10
+                    is_enabled: true
+                  - gift_id: "2"
+                    gift_name: "Heart"
+                    coin_cost: 15
+                    is_enabled: true
         "401":
           description: Unauthorized
         "500":
@@ -420,6 +688,18 @@ paths:
       responses:
         "200":
           description: Gift enabled/disabled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 200
+                message: "Gift enabled successfully"
         "400":
           description: Bad request
         "404":
@@ -449,6 +729,18 @@ paths:
       responses:
         "200":
           description: Gift enabled/disabled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 200
+                message: "Gift disabled successfully"
         "400":
           description: Bad request
         "404":
@@ -478,6 +770,24 @@ paths:
       responses:
         "200":
           description: Gift updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+              example:
+                status: 200
+                message: "Gift updated successfully"
+                data:
+                  gift_id: 1
+                  gift_name: "heart"
+                  coin_cost: 150
         "400":
           description: Bad request - Invalid gift data
         "401":
@@ -519,6 +829,18 @@ paths:
       responses:
         "200":
           description: Gift animation status updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 200
+                message: "Gift animation status updated successfully"
         "400":
           description: Bad request
         "401":
@@ -550,6 +872,18 @@ paths:
       responses:
         "200":
           description: Gift deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 200
+                message: "Gift deleted successfully"
         "401":
           description: Unauthorized
         "404":
@@ -567,3 +901,244 @@ paths:
         schema:
           type: integer
         example: "1"
+  /api/follow/follow:
+    post:
+      summary: follow_user
+      parameters:
+        - name: "{{auth_token_key}}"
+          in: header
+          schema:
+            type: string
+          example: "{{auth_token}}"
+      responses:
+        "200":
+          description: User followed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      follower_id:
+                        type: string
+                      following_id:
+                        type: string
+              example:
+                status: 200
+                message: "User followed successfully"
+                data:
+                  follower_id: "user_id_here"
+                  following_id: "user_to_follow_id"
+        "400":
+          description: Bad request - Missing or invalid parameters
+        "500":
+          description: Internal server error
+      tags:
+        - follow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_id:
+                  type: string
+                following_id:
+                  type: string
+            example:
+              follower_id: "user_id_here"
+              following_id: "user_to_follow_id"
+  /api/follow/unFollow:
+    post:
+      summary: unfollow_user
+      parameters:
+        - name: "{{auth_token_key}}"
+          in: header
+          schema:
+            type: string
+          example: "{{auth_token}}"
+      responses:
+        "200":
+          description: User unfollowed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+              example:
+                status: 200
+                message: "User unfollowed successfully"
+        "400":
+          description: Bad request - Missing or invalid parameters
+        "500":
+          description: Internal server error
+      tags:
+        - follow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_id:
+                  type: string
+                following_id:
+                  type: string
+            example:
+              follower_id: "user_id_here"
+              following_id: "user_to_unfollow_id"
+  /api/follow/followers/{user_id}:
+    get:
+      summary: get_followers
+      parameters:
+        - name: "{{auth_token_key}}"
+          in: header
+          schema:
+            type: string
+          example: "{{auth_token}}"
+        - name: user_id
+          in: path
+          required: true
+          description: User ID to get followers for
+          schema:
+            type: string
+          example: "user_id_here"
+      responses:
+        "200":
+          description: Followers retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+              example:
+                status: 200
+                message: "Followers retrieved successfully"
+                count: 2
+                data:
+                  - user_id: "follower_1"
+                    fullname: "John Doe"
+                  - user_id: "follower_2"
+                    fullname: "Jane Smith"
+        "400":
+          description: Bad request - Missing user_id
+        "500":
+          description: Internal server error
+      tags:
+        - follow
+  /api/follow/following/{user_id}:
+    get:
+      summary: get_following
+      parameters:
+        - name: "{{auth_token_key}}"
+          in: header
+          schema:
+            type: string
+          example: "{{auth_token}}"
+        - name: user_id
+          in: path
+          required: true
+          description: User ID to get following list for
+          schema:
+            type: string
+          example: "user_id_here"
+      responses:
+        "200":
+          description: Following list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+              example:
+                status: 200
+                message: "Following list retrieved successfully"
+                count: 3
+                data:
+                  - user_id: "following_1"
+                    fullname: "Alice Johnson"
+                  - user_id: "following_2"
+                    fullname: "Bob Wilson"
+                  - user_id: "following_3"
+                    fullname: "Charlie Brown"
+        "400":
+          description: Bad request - Missing user_id
+        "500":
+          description: Internal server error
+      tags:
+        - follow
+  /api/follow/isFollowing:
+    get:
+      summary: check_is_following
+      parameters:
+        - name: "{{auth_token_key}}"
+          in: header
+          schema:
+            type: string
+          example: "{{auth_token}}"
+        - name: follower_id
+          in: query
+          required: true
+          description: ID of the follower
+          schema:
+            type: string
+          example: "user_id_here"
+        - name: following_id
+          in: query
+          required: true
+          description: ID of the user to check if following
+          schema:
+            type: string
+          example: "user_to_check_id"
+      responses:
+        "200":
+          description: Follow status checked successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  isFollowing:
+                    type: boolean
+              example:
+                status: 200
+                isFollowing: true
+        "400":
+          description: Bad request - Missing query parameters
+        "500":
+          description: Internal server error
+      tags:
+        - follow
+
