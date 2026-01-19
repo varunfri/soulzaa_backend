@@ -64,11 +64,6 @@ app.use('/api/chats', chat_router);
 app.use('/api/media', media_router);
 app.use('/api/follow', follow_routes);
 app.use("/api", web_hook);
-
-
-
 app.use((req, res) => res.status(404).send("Route not found"));
-
-
 // export the app 
 export default app;
