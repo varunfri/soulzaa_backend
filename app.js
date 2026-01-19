@@ -67,5 +67,11 @@ app.use('/api/follow', follow_routes);
 
 app.use((req, res) => res.status(404).send("Route not found"));
 
+app.post('/github-webhook', (req, res) => {
+    exec('git pull && pm2 restart soluzaa_backend');
+    res.send('OK');
+});
+
+
 // export the app 
 export default app;
