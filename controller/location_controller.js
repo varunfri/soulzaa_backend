@@ -55,7 +55,7 @@ export const locationDetail = async (req, res) => {
                 country: place.country,
                 country_code: place.country_code?.toUpperCase(),
                 state: place.state,
-                state_district: place.state_district,
+                state_district: place.state_district || place.town,
                 county: place.county,
                 post_code: place.postcode,
                 // city: place.city || place.town || place.village

@@ -38,6 +38,10 @@ export const check_user = async (req, res) => {
         });
     }
 };
+const toNull = (value) =>
+    value === undefined || value === null || value.toString().trim() === ''
+        ? null
+        : value;
 
 
 const generateUsername = (uid) => {
@@ -112,15 +116,7 @@ export const sign_up = async (req, res) => {
         county,
         post_code
       ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [
-                userId,
-                toNull(country),
-                toNull(country_code),
-                toNull(state),
-                toNull(state_district),
-                toNull(county),
-                toNull(post_code)
-            ]
+            [userId, country, country_code, state, state_district, county, post_code]
         );
 
         // user_roles

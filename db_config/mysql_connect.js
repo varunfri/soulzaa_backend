@@ -11,9 +11,6 @@ export const mysql_db = mysql.createPool({
     database: process.env.MYSQL_DB,
     multipleStatements: true,
     waitForConnections: true,
-    
-    connectionLimit: 10,
-    connectTimeout: 60,
     dateStrings: true
 });
 

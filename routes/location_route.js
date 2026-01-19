@@ -6,7 +6,6 @@ import { authFirebase } from "../middleware/auth_middleware.js";
 const router = express.Router();
 
 
-router.get('/location/:ip', authFirebase, locationDetail);
-// router.get('/location/:ip', authFirebase, getLocationFromIP);
+router.get('/location', authFirebase, locationDetail);
 
 export default router;
