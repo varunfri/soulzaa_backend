@@ -15,6 +15,7 @@ import chat_router from './routes/chat_route.js';
 import media_router from './routes/media_route.js';
 import follow_routes from './routes/follow_route.js';
 import user_gift_routes from "./routes/user_gift_routes.js";
+import web_hook from "./routes/web_hook_route.js";
 import { swaggerDocs } from "./swagger/swagger.js";
 
 const app = express();
@@ -61,16 +62,12 @@ app.use('/api/chats', chat_router);
 
 // media routes
 app.use('/api/media', media_router);
-
 app.use('/api/follow', follow_routes);
+app.use("/api", web_hook);
+
 
 
 app.use((req, res) => res.status(404).send("Route not found"));
-
-app.post('/github-webhook', (req, res) => {
-    exec('git pull && pm2 restart soluzaa_backend');
-    res.send('OK');
-});
 
 
 // export the app 
