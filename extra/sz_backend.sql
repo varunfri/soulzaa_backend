@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `sz_backend` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+CREATE DATABASE  IF NOT EXISTS `sz_backend` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `sz_backend`;
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: varun.ddns.net    Database: sz_backend
+-- Host: localhost    Database: sz_backend
 -- ------------------------------------------------------
--- Server version	5.5.5-10.11.14-MariaDB-deb12
+-- Server version	8.0.42
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `authorities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `authorities` (
-  `authority_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `authority_name` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `authority_id` bigint NOT NULL AUTO_INCREMENT,
+  `authority_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`authority_id`),
   UNIQUE KEY `authority_name` (`authority_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -53,15 +53,18 @@ DROP TABLE IF EXISTS `coin_packages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `coin_packages` (
-  `package_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `coins` bigint(20) NOT NULL,
+  `package_id` bigint NOT NULL AUTO_INCREMENT,
+  `banner` text COLLATE utf8mb4_unicode_ci,
+  `coins` bigint NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `currency` varchar(10) DEFAULT 'INR',
-  `bonus_coins` bigint(20) DEFAULT 0,
-  `is_active` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `currency` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT 'INR',
+  `add_on_desc` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bonus_coins` bigint DEFAULT '0',
+  `is_active` tinyint(1) DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`package_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +73,7 @@ CREATE TABLE `coin_packages` (
 
 LOCK TABLES `coin_packages` WRITE;
 /*!40000 ALTER TABLE `coin_packages` DISABLE KEYS */;
-INSERT INTO `coin_packages` VALUES (1,100,59.00,'INR',0,1,'2026-01-16 09:14:15'),(2,250,99.00,'INR',0,1,'2026-01-16 09:14:29');
+INSERT INTO `coin_packages` VALUES (1,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768774520975_vip_cup_big_gold_uTLjw3n0z.png',199,190.55,'INR','Add on desc',10,1,'2026-01-16 09:14:15','2026-01-18 22:56:49'),(2,NULL,250,99.00,'INR',NULL,0,1,'2026-01-16 09:14:29',NULL),(3,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768775412548_vip_cup_big_silver_8hVOseqpA.png',150,90.99,'inr','Popular',5,1,'2026-01-18 22:30:14',NULL),(4,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768775465302_vip_cup_big_silver_w8mcUgoCD.png',150,90.99,'inr','Popular',5,0,'2026-01-18 22:31:07','2026-01-18 22:58:05'),(5,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768775545964_vip_cup_big_silver_Mgnx1M_U3.png',150,90.99,'inr','Popular',5,1,'2026-01-18 22:32:28',NULL),(6,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776090243_big_star_04_3x_Utz7vnSWqx.webp',150,90.99,'inr','Best',10,0,'2026-01-18 22:41:32','2026-01-18 22:58:02'),(7,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776165845_big_star_04_3x_RREzy_-zK.webp',150,90.99,'inr','Best',10,1,'2026-01-18 22:42:47',NULL),(8,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776185711_big_star_04_3x_dJzrXZkZu.webp',150,90.99,'inr','Best',10,0,'2026-01-18 22:43:07','2026-01-18 22:58:00'),(9,'https://ik.imagekit.io/jaul95sx2/coin_packages/coin_package_1768776213983_big_star_04_3x_YmnM81FVeA.webp',150,90.99,'INR','Best',10,1,'2026-01-18 22:43:36',NULL);
 /*!40000 ALTER TABLE `coin_packages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,17 +85,17 @@ DROP TABLE IF EXISTS `coin_purchases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `coin_purchases` (
-  `purchase_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `package_id` bigint(20) NOT NULL,
-  `coins` bigint(20) NOT NULL DEFAULT 0,
-  `gateway` enum('RAZORPAY','STRIPE','PAYPAL','UPI') NOT NULL,
-  `gateway_txn_id` varchar(100) NOT NULL,
+  `purchase_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `package_id` bigint NOT NULL,
+  `coins` bigint NOT NULL DEFAULT '0',
+  `gateway` enum('RAZORPAY','STRIPE','PAYPAL','UPI') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gateway_txn_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount_paid` decimal(10,2) NOT NULL,
-  `currency` varchar(10) DEFAULT 'INR',
-  `status` enum('INITIATED','SUCCESS','FAILED','REFUNDED') DEFAULT 'INITIATED',
-  `credited` tinyint(1) DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `currency` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT 'INR',
+  `status` enum('INITIATED','SUCCESS','FAILED','REFUNDED') COLLATE utf8mb4_unicode_ci DEFAULT 'INITIATED',
+  `credited` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`purchase_id`),
   UNIQUE KEY `gateway_txn_id` (`gateway_txn_id`),
   KEY `fk_purchase_user` (`user_id`),
@@ -120,20 +123,20 @@ DROP TABLE IF EXISTS `coin_transactions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `coin_transactions` (
-  `transaction_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `coins` bigint(20) NOT NULL COMMENT 'Positive for gain, Negative for spend',
-  `transaction_type` enum('PURCHASE','GIFT_SENT','GIFT_RECEIVED','BONUS','REFUND','ADMIN_ADJUST') NOT NULL,
-  `reference_id` bigint(20) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `balance_after` bigint(20) NOT NULL,
-  `status` enum('SUCCESS','PENDING','FAILED') DEFAULT 'PENDING',
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `transaction_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `coins` bigint NOT NULL COMMENT 'Positive for gain, Negative for spend',
+  `transaction_type` enum('PURCHASE','GIFT_SENT','GIFT_RECEIVED','BONUS','REFUND','ADMIN_ADJUST') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reference_id` bigint DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `balance_after` bigint NOT NULL,
+  `status` enum('SUCCESS','PENDING','FAILED') COLLATE utf8mb4_unicode_ci DEFAULT 'PENDING',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`transaction_id`),
   KEY `idx_user_id` (`user_id`),
   KEY `idx_user_type` (`user_id`,`transaction_type`),
   CONSTRAINT `fk_tx_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,6 +145,7 @@ CREATE TABLE `coin_transactions` (
 
 LOCK TABLES `coin_transactions` WRITE;
 /*!40000 ALTER TABLE `coin_transactions` DISABLE KEYS */;
+INSERT INTO `coin_transactions` VALUES (2,3,10,'GIFT_SENT',NULL,NULL,170,'SUCCESS','2026-01-18 20:13:13'),(3,12,10,'GIFT_RECEIVED',NULL,NULL,30,'SUCCESS','2026-01-18 20:13:13');
 /*!40000 ALTER TABLE `coin_transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,9 +157,9 @@ DROP TABLE IF EXISTS `gift_leaderboards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gift_leaderboards` (
-  `live_stream_id` bigint(20) unsigned NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `total_coins` bigint(20) DEFAULT NULL,
+  `live_stream_id` bigint unsigned NOT NULL,
+  `user_id` bigint NOT NULL,
+  `total_coins` bigint DEFAULT NULL,
   PRIMARY KEY (`live_stream_id`,`user_id`),
   KEY `user_id` (`user_id`),
   KEY `idx_stream_coins` (`live_stream_id`,`total_coins` DESC),
@@ -181,15 +185,15 @@ DROP TABLE IF EXISTS `gifts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gifts` (
-  `gift_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `gift_name` varchar(50) NOT NULL,
-  `gift_icon_url` varchar(255) DEFAULT NULL,
-  `coin_cost` bigint(20) NOT NULL,
-  `is_animated` tinyint(1) DEFAULT 0,
-  `is_active` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `gift_id` bigint NOT NULL AUTO_INCREMENT,
+  `gift_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gift_icon_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `coin_cost` bigint NOT NULL,
+  `is_animated` tinyint(1) DEFAULT '0',
+  `is_active` tinyint(1) DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`gift_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +202,7 @@ CREATE TABLE `gifts` (
 
 LOCK TABLES `gifts` WRITE;
 /*!40000 ALTER TABLE `gifts` DISABLE KEYS */;
-INSERT INTO `gifts` VALUES (2,'gift_2',NULL,140,0,0,'2025-12-27 08:41:21'),(3,'gift_3',NULL,150,0,1,'2025-12-27 08:41:21'),(4,'check_1','icon_1',14,0,1,'2025-12-27 10:13:52'),(5,'check_2','icon_2',5,0,1,'2025-12-27 10:13:52'),(6,'single_add','iaod',150,0,1,'2025-12-27 10:15:46'),(7,'single_add','iaod',150,0,1,'2025-12-27 10:25:54'),(8,'single_add','iaod',150,0,1,'2026-01-16 09:43:34'),(9,'check_1','icon_1',14,0,1,'2026-01-16 09:46:37'),(10,'check_2','icon_2',5,0,1,'2026-01-16 09:46:37');
+INSERT INTO `gifts` VALUES (11,'star','https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760540851_big_star_06_3x_h_Fwojl90.webp',10,0,1,'2026-01-18 18:22:23'),(12,'small_cup','https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760730904_vip_cup_small_gold_GlAUFh6w1.png',25,0,1,'2026-01-18 18:25:32'),(13,'bronze_cup','https://ik.imagekit.io/jaul95sx2/gifts/gift_1768760762160_vip_cup_small_bronze_B6ntr73Qx.png',20,0,1,'2026-01-18 18:26:04');
 /*!40000 ALTER TABLE `gifts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,8 +214,8 @@ DROP TABLE IF EXISTS `languages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `languages` (
-  `language_id` int(11) NOT NULL AUTO_INCREMENT,
-  `language_name` varchar(50) NOT NULL,
+  `language_id` int NOT NULL AUTO_INCREMENT,
+  `language_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`language_id`),
   UNIQUE KEY `language_name` (`language_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -235,8 +239,8 @@ DROP TABLE IF EXISTS `role_authorities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role_authorities` (
-  `role_id` bigint(20) NOT NULL,
-  `authority_id` bigint(20) NOT NULL,
+  `role_id` bigint NOT NULL,
+  `authority_id` bigint NOT NULL,
   PRIMARY KEY (`role_id`,`authority_id`),
   KEY `authority_id` (`authority_id`),
   CONSTRAINT `role_authorities_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
@@ -250,7 +254,7 @@ CREATE TABLE `role_authorities` (
 
 LOCK TABLES `role_authorities` WRITE;
 /*!40000 ALTER TABLE `role_authorities` DISABLE KEYS */;
-INSERT INTO `role_authorities` VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(3,1),(3,4),(3,10),(3,11),(3,12),(4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7),(4,8),(4,9),(4,10),(4,11),(4,12),(4,13),(4,14),(4,15),(4,16),(4,17);
+INSERT INTO `role_authorities` VALUES (1,1),(2,1),(3,1),(4,1),(1,2),(2,2),(4,2),(1,3),(2,3),(4,3),(1,4),(2,4),(3,4),(4,4),(2,5),(4,5),(2,6),(4,6),(2,7),(4,7),(2,8),(4,8),(2,9),(4,9),(3,10),(4,10),(3,11),(4,11),(3,12),(4,12),(4,13),(4,14),(4,15),(4,16),(4,17);
 /*!40000 ALTER TABLE `role_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,11 +266,11 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
-  `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(50) NOT NULL,
-  `role_description` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `role_id` bigint NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_name` (`role_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -290,13 +294,13 @@ DROP TABLE IF EXISTS `user_authorities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_authorities` (
-  `user_authority_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `authority_id` bigint(20) NOT NULL,
-  `effect` enum('ALLOW','DENY') NOT NULL DEFAULT 'ALLOW',
+  `user_authority_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `authority_id` bigint NOT NULL,
+  `effect` enum('ALLOW','DENY') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ALLOW',
   `expires_at` timestamp NULL DEFAULT NULL,
-  `granted_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `granted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_authority_id`),
   UNIQUE KEY `user_id` (`user_id`,`authority_id`),
   KEY `authority_id` (`authority_id`),
@@ -322,13 +326,16 @@ DROP TABLE IF EXISTS `user_follows`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_follows` (
-  `follower_id` bigint(20) NOT NULL,
-  `following_id` bigint(20) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `follower_id` bigint NOT NULL,
+  `following_id` bigint NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`follower_id`,`following_id`),
   KEY `following_id` (`following_id`,`follower_id`),
+  KEY `idx_follower_id` (`follower_id`),
+  KEY `idx_following_id` (`following_id`),
   CONSTRAINT `user_follows_ibfk_1` FOREIGN KEY (`follower_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  CONSTRAINT `user_follows_ibfk_2` FOREIGN KEY (`following_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+  CONSTRAINT `user_follows_ibfk_2` FOREIGN KEY (`following_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  CONSTRAINT `user_follows_chk_1` CHECK ((`follower_id` <> `following_id`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -349,24 +356,25 @@ DROP TABLE IF EXISTS `user_gifts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_gifts` (
-  `user_gift_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `sender_id` bigint(20) NOT NULL,
-  `receiver_id` bigint(20) NOT NULL,
-  `gift_id` bigint(20) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 1,
-  `total_coins` bigint(20) NOT NULL,
-  `context_type` enum('CHAT','LIVE','PROFILE','COMMENT') NOT NULL,
-  `context_id` bigint(20) DEFAULT NULL,
-  `message_id` bigint(20) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `user_gift_id` bigint NOT NULL AUTO_INCREMENT,
+  `sender_id` bigint NOT NULL,
+  `receiver_id` bigint NOT NULL,
+  `gift_id` bigint NOT NULL,
+  `quantity` int NOT NULL DEFAULT '1',
+  `total_coins` bigint NOT NULL,
+  `context_type` enum('CHAT','LIVE','PROFILE','COMMENT') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `context_id` bigint DEFAULT NULL,
+  `message_id` bigint DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_gift_id`),
   KEY `fk_gift_sender` (`sender_id`),
   KEY `fk_gift_receiver` (`receiver_id`),
   KEY `fk_gift_master` (`gift_id`),
+  KEY `idx_user_gifts_live` (`context_type`,`context_id`),
   CONSTRAINT `fk_gift_master` FOREIGN KEY (`gift_id`) REFERENCES `gifts` (`gift_id`),
   CONSTRAINT `fk_gift_receiver` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `fk_gift_sender` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,6 +383,7 @@ CREATE TABLE `user_gifts` (
 
 LOCK TABLES `user_gifts` WRITE;
 /*!40000 ALTER TABLE `user_gifts` DISABLE KEYS */;
+INSERT INTO `user_gifts` VALUES (1,3,12,11,1,10,'LIVE',3,NULL,'2026-01-18 19:39:13'),(2,3,12,11,1,10,'LIVE',3,NULL,'2026-01-18 19:40:22'),(6,3,12,11,1,10,'LIVE',3,NULL,'2026-01-18 20:13:13');
 /*!40000 ALTER TABLE `user_gifts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,9 +395,9 @@ DROP TABLE IF EXISTS `user_languages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_languages` (
-  `user_id` bigint(20) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `user_id` bigint NOT NULL,
+  `language_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`,`language_id`),
   KEY `language_id` (`language_id`),
   CONSTRAINT `user_languages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
@@ -414,14 +423,14 @@ DROP TABLE IF EXISTS `user_location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_location` (
-  `user_id` bigint(20) NOT NULL,
-  `location_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `country` varchar(100) NOT NULL,
-  `country_code` varchar(10) NOT NULL,
-  `state` varchar(50) NOT NULL,
-  `state_district` varchar(100) NOT NULL,
-  `post_code` varchar(50) NOT NULL,
-  `county` varchar(50) DEFAULT NULL,
+  `user_id` bigint NOT NULL,
+  `location_id` bigint NOT NULL AUTO_INCREMENT,
+  `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state_district` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `county` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`location_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_location_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
@@ -446,10 +455,10 @@ DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_roles` (
-  `user_id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` bigint NOT NULL,
+  `role_id` bigint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -468,6 +477,31 @@ INSERT INTO `user_roles` VALUES (3,1,'2025-12-20 07:40:49','2025-12-20 07:40:49'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_stats`
+--
+
+DROP TABLE IF EXISTS `user_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_stats` (
+  `user_id` bigint NOT NULL,
+  `followers_count` int DEFAULT '0',
+  `following_count` int DEFAULT '0',
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_user_stats` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_stats`
+--
+
+LOCK TABLES `user_stats` WRITE;
+/*!40000 ALTER TABLE `user_stats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_stats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_streams`
 --
 
@@ -475,26 +509,26 @@ DROP TABLE IF EXISTS `user_streams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_streams` (
-  `stream_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `stream_key` varchar(255) NOT NULL,
-  `stream_url` text DEFAULT NULL,
-  `status` enum('created','live','end','banned') DEFAULT 'created',
-  `is_audio` tinyint(1) NOT NULL DEFAULT 0,
+  `stream_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `status` enum('created','live','end','banned') COLLATE utf8mb4_unicode_ci DEFAULT 'created',
+  `is_audio` tinyint(1) NOT NULL DEFAULT '0',
+  `is_paused` tinyint(1) NOT NULL DEFAULT '0',
+  `current_viewers` int DEFAULT '0',
   `started_at` timestamp NULL DEFAULT NULL,
   `ended_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `is_live` tinyint(1) GENERATED ALWAYS AS (`status` = 'live') STORED,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_live` tinyint(1) GENERATED ALWAYS AS ((`status` = _utf8mb4'live')) STORED,
+  `paused_at` timestamp NULL DEFAULT NULL,
+  `total_views` bigint DEFAULT '0',
   PRIMARY KEY (`stream_id`),
-  UNIQUE KEY `stream_key` (`stream_key`),
-  UNIQUE KEY `uniq_user_live_stream` (`user_id`,`is_live`),
   KEY `idx_user_status` (`user_id`,`status`),
   KEY `idx_live_streams` (`status`,`started_at`),
   KEY `idx_user_streams_status_user` (`status`,`user_id`,`started_at`),
   KEY `idx_user_streams_live_type` (`is_live`,`is_audio`,`started_at`),
   KEY `idx_user_streams_user` (`user_id`),
   CONSTRAINT `user_streams_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -503,6 +537,7 @@ CREATE TABLE `user_streams` (
 
 LOCK TABLES `user_streams` WRITE;
 /*!40000 ALTER TABLE `user_streams` DISABLE KEYS */;
+INSERT INTO `user_streams` (`stream_id`, `user_id`, `status`, `is_audio`, `is_paused`, `current_viewers`, `started_at`, `ended_at`, `created_at`, `paused_at`, `total_views`) VALUES (1,3,'end',0,0,0,'2026-01-18 15:14:18','2026-01-18 16:54:57','2026-01-18 15:14:18',NULL,0),(2,3,'end',1,0,0,'2026-01-18 17:27:34','2026-01-18 17:35:25','2026-01-18 17:27:34',NULL,0),(3,3,'end',1,0,0,'2026-01-18 19:34:57','2026-01-19 13:59:30','2026-01-18 19:34:57',NULL,0),(4,3,'live',0,0,0,'2026-01-19 13:59:44',NULL,'2026-01-19 13:59:44',NULL,0);
 /*!40000 ALTER TABLE `user_streams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -514,12 +549,12 @@ DROP TABLE IF EXISTS `user_vip_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_vip_history` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `vip_level_id` int(11) NOT NULL,
-  `achieved_at` timestamp NULL DEFAULT current_timestamp(),
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `vip_level_id` int NOT NULL,
+  `achieved_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `expired_at` timestamp NULL DEFAULT NULL,
-  `coins_spent` bigint(20) DEFAULT NULL,
+  `coins_spent` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `vip_level_id` (`vip_level_id`),
@@ -545,13 +580,13 @@ DROP TABLE IF EXISTS `user_vip_levels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_vip_levels` (
-  `user_id` bigint(20) NOT NULL,
-  `vip_level_id` int(11) NOT NULL,
-  `total_coins_spent` bigint(20) DEFAULT 0,
-  `vip_started_at` timestamp NULL DEFAULT current_timestamp(),
+  `user_id` bigint NOT NULL,
+  `vip_level_id` int NOT NULL,
+  `total_coins_spent` bigint DEFAULT '0',
+  `vip_started_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `vip_expires_at` timestamp NULL DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT 1,
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_active` tinyint(1) DEFAULT '1',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   KEY `vip_level_id` (`vip_level_id`),
   KEY `idx_user_vip_levels_active` (`user_id`,`is_active`),
@@ -577,11 +612,11 @@ DROP TABLE IF EXISTS `user_wallets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_wallets` (
-  `wallet_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `balance` bigint(20) NOT NULL DEFAULT 0,
-  `locked_balance` bigint(20) NOT NULL DEFAULT 0,
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `wallet_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `balance` bigint NOT NULL DEFAULT '0',
+  `locked_balance` bigint NOT NULL DEFAULT '0',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`wallet_id`),
   UNIQUE KEY `user_id` (`user_id`),
   CONSTRAINT `fk_wallet_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
@@ -594,7 +629,7 @@ CREATE TABLE `user_wallets` (
 
 LOCK TABLES `user_wallets` WRITE;
 /*!40000 ALTER TABLE `user_wallets` DISABLE KEYS */;
-INSERT INTO `user_wallets` VALUES (1,3,200,0,'2026-01-16 09:21:13'),(5,12,0,0,'2025-12-27 15:43:22'),(6,14,0,0,'2026-01-17 11:18:48');
+INSERT INTO `user_wallets` VALUES (1,3,170,0,'2026-01-18 20:13:13'),(5,12,30,0,'2026-01-18 20:13:13'),(6,14,0,0,'2026-01-17 11:18:48');
 /*!40000 ALTER TABLE `user_wallets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -606,12 +641,12 @@ DROP TABLE IF EXISTS `usernames`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usernames` (
-  `username_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `username` varchar(10) DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `username_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `username` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`username_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `user_id` (`user_id`,`is_active`),
@@ -639,22 +674,22 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `firebase_uid` varchar(50) NOT NULL,
-  `full_name` varchar(100) DEFAULT NULL,
-  `profile_picture` text DEFAULT NULL,
+  `user_id` bigint NOT NULL AUTO_INCREMENT,
+  `firebase_uid` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `full_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `profile_picture` text COLLATE utf8mb4_unicode_ci,
   `dob` date DEFAULT NULL,
-  `gender` enum('male','female','other') DEFAULT NULL,
-  `bio` text DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `auth_provider` enum('google','phone') DEFAULT 'google',
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `gender` enum('male','female','other') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bio` text COLLATE utf8mb4_unicode_ci,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `auth_provider` enum('google','phone') COLLATE utf8mb4_unicode_ci DEFAULT 'google',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email` (`email`),
   UNIQUE KEY `firebase_uid` (`firebase_uid`),
+  UNIQUE KEY `email` (`email`),
   UNIQUE KEY `phone` (`phone`),
   KEY `idx_users_active_created` (`is_active`,`created_at`),
   KEY `idx_users_active` (`user_id`,`is_active`)
@@ -667,7 +702,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'FozLwHqEpnfIFYzSKcmuyKb3ash1','Var Fri',NULL,'1990-01-01','other',NULL,'vv137941@gmail.com',NULL,1,'google','2025-12-20 07:40:49','2025-12-20 07:40:49'),(12,'EvxEvSLajGVv5KTsN4TRQInMY0i2','Soulzaa',NULL,'1990-01-01','other',NULL,'soulzaa.project@gmail.com',NULL,1,'google','2025-12-27 15:43:22','2025-12-27 15:43:22'),(14,'hZ29knMafSX3AdrORZbDAICamkE3','Varun',NULL,'2004-01-17','male',NULL,NULL,'9448140164',1,'phone','2026-01-17 11:18:47','2026-01-17 11:18:47');
+INSERT INTO `users` VALUES (3,'FozLwHqEpnfIFYzSKcmuyKb3ash1','Soulzaa Admin','https://ik.imagekit.io/jaul95sx2/profile_pictures/profile_3_1768762524967_photo-1557053910-d9eadeed1c58_DvX0hftxS.jpeg','2001-01-01','male',NULL,'vv137941@gmail.com',NULL,1,'google','2025-12-20 07:40:49','2026-01-18 18:58:51'),(12,'Q240Z3wwiGPPZKorZEarlF9NTsn2','Soulzaa',NULL,'1990-01-01','other',NULL,'soulzaa.project@gmail.com',NULL,1,'google','2025-12-27 15:43:22','2026-01-18 20:29:53'),(14,'hZ29knMafSX3AdrORZbDAICamkE3','Varun',NULL,'2004-01-17','male',NULL,NULL,'9448140164',1,'phone','2026-01-17 11:18:47','2026-01-17 11:18:47');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -679,13 +714,14 @@ DROP TABLE IF EXISTS `vip_levels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vip_levels` (
-  `vip_level_id` int(11) NOT NULL,
-  `level_name` varchar(50) NOT NULL,
-  `min_coins` bigint(20) NOT NULL,
-  `benefits` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`benefits`)),
-  `badge_url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`vip_level_id`)
+  `vip_level_id` int NOT NULL,
+  `level_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `min_coins` bigint NOT NULL,
+  `benefits` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `badge_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`vip_level_id`),
+  CONSTRAINT `vip_levels_chk_1` CHECK (json_valid(`benefits`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -707,4 +743,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-01-17 17:00:10
+-- Dump completed on 2026-01-30 18:20:33
