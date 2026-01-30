@@ -317,38 +317,50 @@ export const get_video_lives = async (req, res) => {
     try {
         const [result] = await mysql_db.query(
             `SELECT
-    u.user_id,
-    u.full_name,
-    COALESCE(un.username, '') AS username,
-    u.profile_picture,
-    ul.country,
-    ul.country_code,
-    COALESCE(uvl.vip_level_id, 0) AS vip_level_id,
-    us.stream_id,
-     
-    us.started_at
-    FROM user_streams us
-    INNER JOIN users u
-        ON u.user_id = us.user_id
-        AND u.is_active = 1
-    LEFT JOIN usernames un
-        ON un.user_id = u.user_id
-        AND un.is_active = 1
-    LEFT JOIN user_location ul
-        ON ul.location_id = (
-            SELECT MAX(location_id)
-            FROM user_location
-            WHERE user_id = u.user_id
-        )
-    LEFT JOIN user_vip_levels uvl
-        ON uvl.user_id = u.user_id
-        AND uvl.is_active = 1
-    WHERE us.is_live = 1
-    AND us.is_audio = 0
-    ORDER BY
-    COALESCE(uvl.vip_level_id, 0) DESC,
-    us.started_at DESC;`
-        );
+            u.user_id,
+            u.full_name,
+            COALESCE(un.username, '') AS username,
+            u.profile_picture,
+            ul.country,
+            ul.country_code,
+            COALESCE(uvl.vip_level_id, 0) AS vip_level_id,
+            us.stream_id,
+            us.started_at,
+            us.current_viewers,
+            us.total_views,
+            COALESCE(ug.total_coins_earned, 0) AS total_coins_earned
+        FROM user_streams us
+        INNER JOIN users u
+            ON u.user_id = us.user_id
+            AND u.is_active = 1
+        LEFT JOIN usernames un
+            ON un.user_id = u.user_id
+            AND un.is_active = 1
+        LEFT JOIN user_location ul
+            ON ul.location_id = (
+                SELECT MAX(location_id)
+                FROM user_location
+                WHERE user_id = u.user_id
+            )
+        LEFT JOIN user_vip_levels uvl
+            ON uvl.user_id = u.user_id
+            AND uvl.is_active = 1
+        LEFT JOIN (
+            SELECT
+                receiver_id,
+                SUM(total_coins) AS total_coins_earned
+            FROM user_gifts
+            GROUP BY receiver_id
+        ) ug
+            ON ug.receiver_id = u.user_id
+        WHERE us.is_live = 1
+        AND us.is_audio = 0
+        ORDER BY
+            COALESCE(uvl.vip_level_id, 0) DESC,
+            us.started_at DESC;
+        `);
+
+
 
         if (result.length === 0) {
             return res.status(404).json({
@@ -367,6 +379,9 @@ export const get_video_lives = async (req, res) => {
             country_code: value.country_code,
             vip_level_id: value.vip_level_id,
             stream_id: value.stream_id,
+            coins: parseFloat(value.total_coins_earned),
+            total_views: parseInt(value.total_views),
+            current_views: parseInt(value.current_viewers),
         }));
 
         return res.status(200).json({
@@ -395,7 +410,9 @@ export const get_audio_lives = async (req, res) => {
     ul.country_code,
     COALESCE(uvl.vip_level_id, 0) AS vip_level_id,
     us.stream_id,
-    us.started_at
+    us.started_at,
+    us.current_viewers,
+    us.total_views
     FROM user_streams us
     INNER JOIN users u
         ON u.user_id = us.user_id
@@ -426,7 +443,6 @@ export const get_audio_lives = async (req, res) => {
             });
         }
 
-
         const data = result.map(value => ({
             uid: value.user_id,
             full_name: value.full_name,
@@ -436,6 +452,9 @@ export const get_audio_lives = async (req, res) => {
             country_code: value.country_code,
             vip_level_id: value.vip_level_id,
             stream_id: value.stream_id,
+            coins: parseFloat(value.total_coins_earned),
+            total_views: parseInt(value.total_views),
+            current_views: parseInt(value.current_viewers),
         }));
 
         return res.status(200).json({

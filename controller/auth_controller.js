@@ -196,9 +196,11 @@ export const sign_in = async (req, res) => {
         u.full_name,
         u.dob,
         u.gender,
+        un.username,
         r.role_name,
         a.authority_name
       FROM users u
+      JOIN usernames un ON u.user_id = un.user_id AND un.is_active = 1
       JOIN user_roles ur ON u.user_id = ur.user_id
       JOIN roles r ON ur.role_id = r.role_id
       JOIN role_authorities ra ON r.role_id = ra.role_id
@@ -229,7 +231,8 @@ export const sign_in = async (req, res) => {
         const data = {
             "id": user.user_id,
             "full_name": user.full_name,
-            "email": user.email
+            "email": user.email,
+            "username": user.username
         };
 
         res.status(200).header(
